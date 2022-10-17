@@ -106,5 +106,5 @@ def generate_environement():
 
     return arena
 
-arena=generate_environement()
-print(arena)
+# arena=generate_environement()
+# print(arena)
