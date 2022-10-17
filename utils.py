@@ -1,5 +1,35 @@
-def get_shortest_path():
-    path = []
-    path_length = len(path)
-    return path, path_length
+from collections import deque
 
+def FindPath(parent, start_pos, end_pos):
+    path = deque()
+    path.append(end_pos)
+    while path[-1] != start_pos:
+         path.append(parent[path[-1]])
+    path.reverse()
+    return path
+
+def get_shortest_path(start_pos, end_pos, arena):
+    # path = [start_pos]
+    parent = {}
+    visited = [False] * 50
+    
+    print(f'start_pos = {start_pos}')
+    visited[start_pos] = True
+    # print(visited)
+    neighbours = deque()
+
+    curr_pos = start_pos
+    while curr_pos != end_pos:
+        for surrounding_node in arena[curr_pos]:
+            # print(f'curr_pos: {curr_pos}')
+            # print(f'surrounding_node: {surrounding_node}')
+            if not visited[surrounding_node] and surrounding_node not in neighbours:
+                neighbours.append(surrounding_node)
+                parent.update({surrounding_node: curr_pos})
+                visited[surrounding_node] = True
+                # print(f'added {surrounding_node}')
+        curr_pos = neighbours.popleft()
+
+    path = FindPath(parent, start_pos, end_pos)
+    # print(f'a {type(path)}')
+    return path, len(path) - 1
