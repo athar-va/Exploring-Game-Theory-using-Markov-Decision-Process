@@ -18,10 +18,7 @@ def run():
     prey.move(arena)
     print(prey.curr_pos)
 
-    # testing shortest path utility
-    # path, path_length = utils.get_shortest_path(arena, 0, 48)
-    # print(path, path_length)
-
+    #testing predator
     predator = Predator()
     print('Predator:')
     print(f'predator is at {predator.curr_pos}')

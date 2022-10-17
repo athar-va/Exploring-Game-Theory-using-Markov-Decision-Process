@@ -1,6 +1,17 @@
 from collections import deque
 
 def FindPath(parent, start_pos, end_pos):
+    """
+    Backtracks and finds the path in the arena to the end position from the start position
+
+    Parameters:
+    parent (dict): Parent dictionary of each node
+    start_pos (int): Start position of the path
+    end_pos (int): End position of the path
+
+    Returns:
+    path (deque): Path from start to end position
+    """
     path = deque()
     path.append(end_pos)
     while path[-1] != start_pos:
@@ -9,7 +20,20 @@ def FindPath(parent, start_pos, end_pos):
     return path
 
 def get_shortest_path(start_pos, end_pos, arena):
-    # path = [start_pos]
+    """
+    Uses Breath First Search to find the shortest path beween the start and end position
+    'neighbours' is used as the fringe (queue) to add surrounding nodes in the arena
+
+    Parameters:
+    start_pos (int): Start position of the path
+    end_pos (int): End position of the path
+    arena (dict): The arena used currently
+
+    Returns:
+    path (deque): Shortest path evaluated
+    (len(path) - 1) (int): Length of the path
+    """
+    
     parent = {}
     visited = [False] * 50
     
@@ -32,4 +56,4 @@ def get_shortest_path(start_pos, end_pos, arena):
 
     path = FindPath(parent, start_pos, end_pos)
     # print(f'a {type(path)}')
-    return path, len(path) - 1
+    return path, (len(path) - 1)

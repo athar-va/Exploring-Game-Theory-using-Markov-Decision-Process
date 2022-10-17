@@ -10,7 +10,7 @@ class Predator:
 
         Parameters:
         self
-        start: A random integer denoting a node in the arena
+        start (int): A random integer denoting a node in the arena
         """
         self.curr_pos = start
         print(f'predator initialized with {self.curr_pos}')
@@ -21,8 +21,8 @@ class Predator:
 
         Parameters:
         self
-        arena: The arena used currently
-        agent_pos: Position of the agent
+        arena (dict): The arena used currently
+        agent_pos (int): Position of the agent
         """
         print('moving predator')
         path, path_length = utils.get_shortest_path(self.curr_pos, agent_pos, arena)
