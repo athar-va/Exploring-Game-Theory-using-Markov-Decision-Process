@@ -3,6 +3,7 @@ from pprint import pprint
 import environment as env
 from prey import Prey
 from predator import Predator
+from Agent_1 import Agent_1
 import utils
 
 def run():
@@ -24,6 +25,12 @@ def run():
     print(f'predator is at {predator.curr_pos}')
     predator.move(20, arena)
     print(f'predator moved to {predator.curr_pos}')
+
+    #testing Agent 1
+    agent1= Agent_1(prey.curr_pos, predator.curr_pos)
+    print("Agent 1:")
+    agent1.move(arena, prey.curr_pos, predator.curr_pos)
+
 
 if __name__ == '__main__':
     run()

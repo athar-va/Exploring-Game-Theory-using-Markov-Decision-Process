@@ -21,7 +21,7 @@ def FindPath(parent, start_pos, end_pos):
 
 def get_shortest_path(start_pos, end_pos, arena):
     """
-    Uses Breath First Search to find the shortest path beween the start and end position
+    Uses Breath First Search to find the shortest path between the start and end position
     'neighbours' is used as the fringe (queue) to add surrounding nodes in the arena
 
     Parameters:
@@ -37,7 +37,7 @@ def get_shortest_path(start_pos, end_pos, arena):
     parent = {}
     visited = [False] * 50
     
-    print(f'start_pos = {start_pos}')
+    #print(f'start_pos = {start_pos}')
     visited[start_pos] = True
     # print(visited)
     neighbours = deque()

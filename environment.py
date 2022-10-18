@@ -64,7 +64,7 @@ def generate_environement():
                 arena[node2].append(node1)
 
                 # Removing nodes from available nodes
-                print(node1,node2)
+                #print(node1,node2)
                 available_nodes.remove(node1)
                 available_nodes.remove(node2)
                 degree[node1] += 1
