@@ -6,6 +6,9 @@ from predator import Predator
 from Agent_1 import Agent_1
 import utils
 
+def begin_agent_1(agent1, prey, predator, arena):
+    pass
+
 def run():
     # Generating the environment
     arena = env.generate_environement()
@@ -29,6 +32,8 @@ def run():
     #testing Agent 1
     agent1= Agent_1(prey.curr_pos, predator.curr_pos)
     print("Agent 1:")
+
+    results_agent_1 = begin_agent_1(agent1, prey, predator, arena)
     agent1.move(arena, prey.curr_pos, predator.curr_pos)
 
 
