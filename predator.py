@@ -13,7 +13,7 @@ class Predator:
         start (int): A random integer denoting a node in the arena
         """
         self.curr_pos = start
-        print(f'predator initialized with {self.curr_pos}')
+        #print(f'predator initialized with {self.curr_pos}')
     
     def move(self, agent_pos, arena):
         """
@@ -24,8 +24,9 @@ class Predator:
         arena (dict): The arena used currently
         agent_pos (int): Position of the agent
         """
-        print('moving predator')
+        #print('moving predator')
         path, path_length = utils.get_shortest_path(self.curr_pos, agent_pos, arena)
         print(path)
+        path.popleft()  # removes the first element of the path so that predator doesn't endup in the the same place
         self.curr_pos = path.popleft()
 

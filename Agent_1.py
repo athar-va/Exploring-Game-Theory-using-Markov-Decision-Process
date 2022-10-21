@@ -7,6 +7,8 @@ import environment as env
 
 """
 
+
+
 class Agent_1:
 
     def __init__(self, prey_loc, predator_loc):
@@ -36,8 +38,10 @@ class Agent_1:
         Parameters:
         self
         arena (dictionary): Adjacency list representing the graph
+        prey_loc (int): Location of prey
+        predator_loc (int): Location of Predator
         """
-
+        """
         print("Initial pos",self.curr_pos)
         # Neighbours of the current node are extracted here
         self.neighbours = arena[self.curr_pos].copy()
@@ -112,8 +116,18 @@ class Agent_1:
         #print(curr_pos_prey_dist,curr_pos_predator_dist)
 
         print("Current pos" , self.curr_pos)
+        """
 
-""" # Class Test code
+        pos = utils.best_node(arena, self.curr_pos, prey_loc, predator_loc)
+
+        # Handling Sitting and praying case
+        if pos == 999:
+            pass
+        else:
+            self.curr_pos = pos
+
+"""
+# Class Test code
 #arena=env.generate_environement()
 arena = {0: [1, 49, 48],
          1: [2, 0, 46],
@@ -165,8 +179,6 @@ arena = {0: [1, 49, 48],
          47: [48, 46, 43],
          48: [49, 47, 0],
          49: [0, 48, 45]}
-
-a1 = Agent_1(5, 6)
 # print(a1.curr_pos)
 a1.move(arena, 5, 6)
 # pprint(arena)
