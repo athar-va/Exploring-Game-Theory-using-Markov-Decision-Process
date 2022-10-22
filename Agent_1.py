@@ -201,11 +201,10 @@ class Agent_1:
                     break
 
             game_count += 1
-            data_row = ["Agent_1", win_count*100/number_of_games, loss_count*100/number_of_games, forced_termination*100/number_of_games]
-            print(data_row)
-            data.append(data_row)
-            pprint(arena)
-        print(data)
+
+        data_row = ["Agent_1", win_count * 100 / number_of_games, loss_count * 100 / number_of_games,
+                    forced_termination * 100 / number_of_games]
+        data.append(data_row)
         return data
 
 
