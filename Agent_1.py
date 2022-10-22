@@ -1,5 +1,10 @@
-import utils
 import random
+from pprint import pprint
+
+import config
+import utils
+from prey import Prey
+from predator import Predator
 """
 # Test Imports
 from pprint import pprint
@@ -125,6 +130,84 @@ class Agent_1:
             pass
         else:
             self.curr_pos = pos
+
+    def begin(arena):
+        """
+        Creates all the maze objects and plays number of games and collects data
+
+        Parameters:
+        arena (dict): Arena to use
+
+        Returns:
+
+        """
+
+        # Initiating game variables
+        game_count = 0
+        step_count = 0
+
+        # Initiating variables for analysis
+        win_count = 0
+        loss_count = 0
+        forced_termination = 0
+        data = []
+        data_row = []
+
+
+        # Config variable (To be transferred to a parameter file)
+        number_of_games = config.NUMBER_OF_GAMES
+        forced_termination_threshold = config.FORCED_TERMINATION_THRESHOLD
+
+        while game_count < number_of_games:
+            # Creating objects
+            prey = Prey()
+            predator = Predator()
+            agent1 = Agent_1(prey.curr_pos, predator.curr_pos)
+
+            step_count = 0
+
+            while 1:
+                print("In game Agent_1 at game_count: ", game_count, " step_count: ", step_count)
+                print(agent1.curr_pos, prey.curr_pos, predator.curr_pos)
+                agent1.move(arena, prey.curr_pos, predator.curr_pos)
+
+                # Checking termination states
+                if agent1.curr_pos == prey.curr_pos:
+                    win_count += 1
+                    break
+                elif agent1.curr_pos == predator.curr_pos:
+                    loss_count += 1
+                    break
+
+                prey.move(arena)
+
+                # Checking termination states
+                if agent1.curr_pos == prey.curr_pos:
+                    win_count += 1
+                    break
+
+                predator.move(agent1.curr_pos, arena)
+
+                # Checking termination states
+                if agent1.curr_pos == predator.curr_pos:
+                    loss_count += 1
+                    break
+
+                step_count += 1
+
+                # Forcing termination
+                if step_count >= forced_termination_threshold:
+                    forced_termination += 1
+                    break
+
+            game_count += 1
+            data_row = ["Agent_1", win_count*100/number_of_games, loss_count*100/number_of_games, forced_termination*100/number_of_games]
+            print(data_row)
+            data.append(data_row)
+            pprint(arena)
+        print(data)
+        return data
+
 
 """
 # Class Test code

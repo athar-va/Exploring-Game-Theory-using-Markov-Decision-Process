@@ -1,4 +1,22 @@
 from collections import deque
+import csv
+
+import config
+
+def store_data(data):
+    """
+    Stores the collected data toa a CSV file
+
+    data: Data collected from all the agents
+    """
+    file_path_to_write = config.FILE_PATH + config.FILE_NAME
+    print(file_path_to_write)
+    f = open(file_path_to_write, 'w')
+    writer = csv.writer(f)
+    writer.writerows(data)
+    print("Data Collection Complete")
+    f.close()
+
 
 def FindPath(parent, start_pos, end_pos):
     """
@@ -17,6 +35,7 @@ def FindPath(parent, start_pos, end_pos):
     while path[-1] != start_pos:
          path.append(parent[path[-1]])
     path.reverse()
+    path.popleft()
     return path
 
 def get_shortest_path(start_pos, end_pos, arena):
@@ -73,6 +92,9 @@ def best_node(arena, curr_pos, prey_loc, predator_loc):
     arena (dictionary): Adjacency list representing the graph
     prey_loc (int): Location of prey
     predator_loc (int): Location of Predator
+
+    Returns:
+    curr_pos (int): Position to move to
     """
 
     # Do not remove the following test cases
