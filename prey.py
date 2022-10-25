@@ -1,4 +1,5 @@
 import random
+from copy import deepcopy
 
 class Prey:
     def __init__(self, start = random.randint(0,49)):
@@ -22,6 +23,6 @@ class Prey:
         """
 
         #list_to_choose_from = arena[self.curr_pos] <- this line edits the original arena variable
-        list_to_choose_from = arena[self.curr_pos].copy()
+        list_to_choose_from = deepcopy(arena[self.curr_pos])
         list_to_choose_from.append(self.curr_pos)
         self.curr_pos = random.choice(list_to_choose_from)

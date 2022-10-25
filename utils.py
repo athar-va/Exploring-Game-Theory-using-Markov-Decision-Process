@@ -1,7 +1,52 @@
 from collections import deque
 import csv
+import random
 
 import config
+
+def get_degree(arena, node):
+    """
+    Gets the degree of the node
+
+    Parameters:
+    arena (dict): Arena for the game
+    node (int): Node to get the degree for
+
+    Returns:
+    len(arena[node]) (int): Gets the degree of the node
+    """
+    return len(arena[node])
+
+def survey_prey(agent, prey):
+    """
+    Surveys the node with the highest probability of the prey being there and updates the belief state accordingly
+
+    Parameters:
+    agent (object): Agent object
+    prey (object): Prey object
+
+    Returns:
+    found_prey (Bool): Returns True if found prey else False
+    node_to_survey (int): Returns the node surveyed
+    """
+
+    belief_state = agent.belief_state
+
+    # Selects all positions where the probability is max
+    max_prob_of_prey = [pos for pos, prob in belief_state.items() if prob ==  max(belief_state.values())]
+
+    print(max_prob_of_prey)
+
+    node_to_survey = random.choice(max_prob_of_prey)
+
+    print(node_to_survey)
+
+    if node_to_survey == prey.curr_pos:
+        return True, node_to_survey
+    else:
+        return False, node_to_survey
+
+
 
 def store_data(data):
     """
@@ -10,7 +55,7 @@ def store_data(data):
     data: Data collected from all the agents
     """
     file_path_to_write = config.FILE_PATH + config.FILE_NAME
-    print(file_path_to_write)
+    # print(file_path_to_write)
     f = open(file_path_to_write, 'w')
     writer = csv.writer(f)
     writer.writerows(data)

@@ -88,7 +88,7 @@ def generate_environement():
         #print(available_nodes)
         #print(sum(degree.values()))
 
-    print(sum(degree.values()))
+    # print(sum(degree.values()))
     #print(degree)
     #print(arena)
 

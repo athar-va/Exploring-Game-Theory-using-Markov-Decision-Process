@@ -26,7 +26,7 @@ class Predator:
         """
         #print('moving predator')
         path, path_length = utils.get_shortest_path(self.curr_pos, agent_pos, arena)
-        print(path)
+        # print(path)
         # path.popleft()  # removes the first element of the path so that predator doesn't endup in the the same place
         self.curr_pos = path.popleft()
 
