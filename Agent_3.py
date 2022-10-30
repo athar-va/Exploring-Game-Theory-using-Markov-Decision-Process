@@ -93,7 +93,7 @@ class Agent_3:
                 if not found_prey:
                     found_prey, node_surveyed = utils.survey_prey(agent3, prey)
                 #prey belief state will be updated here
-                agent3.prey_belief_state = utils.update_prey_belief_state(agent3.prey_belief_state, found_prey, 'after_survey')
+                agent3.prey_belief_state = utils.update_prey_belief_state(agent3.prey_belief_state, found_prey, node_surveyed, 'after_survey')
 
                 """
                 # print(found_prey)
@@ -124,11 +124,11 @@ class Agent_3:
                     break
 
                 # update belief state
-                agent3.prey_belief_state = utils.update_prey_belief_state(agent3.prey_belief_state, found_prey, 'after_agent_moves')
+                agent3.prey_belief_state = utils.update_prey_belief_state(agent3.prey_belief_state, found_prey, node_surveyed, 'after_agent_moves')
 
                 prey.move(arena)
 
-                agent3.prey_belief_state = utils.update_prey_belief_state(agent3.prey_belief_state, found_prey, 'after_prey_moves')
+                agent3.prey_belief_state = utils.update_prey_belief_state(agent3.prey_belief_state, found_prey, node_surveyed, 'after_prey_moves')
                 # Checking termination states
                 if agent3.curr_pos == prey.curr_pos:
                     win_count += 1
