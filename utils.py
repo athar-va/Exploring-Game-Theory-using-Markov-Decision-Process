@@ -127,14 +127,14 @@ def return_max_prey_belief(belief_state, arena):
     Placeholder for now
     """
     # return max(belief_state, key = belief_state.get)
-    return random.randint(0,50)
+    return random.randint(0,49)
 
 def return_max_predator_belief(belief_state, arena):
     """
     Placeholder for now
     """
     # return max(belief_state, key = belief_state.get)
-    return random.randint(0,50)
+    return random.randint(0,49)
 
 #needs to be worked upon
 def best_node_v2(arena, curr_pos, prey_loc, predator_loc):

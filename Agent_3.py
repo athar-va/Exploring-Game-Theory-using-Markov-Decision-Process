@@ -29,9 +29,9 @@ class Agent_3:
 
         self.curr_pos = random.choice(list_to_choose_from)
 
-        self.belief_state = dict.fromkeys([i for i in range(50)], 1/49)
-        self.belief_state[self.curr_pos] = 0
-        print(f'Initial belief state: {self.belief_state}')
+        self.prey_belief_state = dict.fromkeys([i for i in range(50)], 1/49)
+        self.prey_belief_state[self.curr_pos] = 0
+        print(f'Initial belief state: {self.prey_belief_state}')
 
     def move(self, arena, prey_loc, predator_loc):
         """
@@ -42,82 +42,6 @@ class Agent_3:
         arena (dictionary): Adjacency list representing the graph
         prey_loc (int): Location of prey
         predator_loc (int): Location of Predator
-        """
-        """
-        print("Initial pos",self.curr_pos)
-        # Neighbours of the current node are extracted here
-        self.neighbours = arena[self.curr_pos].copy()
-
-        # Distances from prey and predator will be stored in the following dicts
-        predator_dist = {}
-        prey_dist = {}
-
-        # Storing the distances of the agent location to the prey and predator
-        path, curr_pos_prey_dist = utils.get_shortest_path(self.curr_pos, prey_loc, arena)
-        path, curr_pos_predator_dist = utils.get_shortest_path(self.curr_pos, predator_loc, arena)
-
-        # Find distance from all neighbours to the prey and the predator
-        for i in self.neighbours:
-            path, prey_dist[i] = utils.get_shortest_path(i, prey_loc, arena)
-            path, predator_dist[i] = utils.get_shortest_path(i, predator_loc, arena)
-
-       # Defining subsets of nodes
-        closer_to_prey = {}
-        not_farther_from_prey = {}
-        farther_from_predator = {}
-        not_closer_to_predator = {}
-
-
-        # Adding nodes to the subsets
-        for k in prey_dist.keys():
-            if prey_dist[k] < curr_pos_prey_dist:
-                closer_to_prey[k]=prey_dist[k]
-
-        for k in prey_dist.keys():
-            if prey_dist[k] == curr_pos_prey_dist:
-                not_farther_from_prey[k]=prey_dist[k]
-
-        for k in predator_dist.keys():
-            if predator_dist[k] >= curr_pos_predator_dist:
-                farther_from_predator[k]=predator_dist[k]
-
-        for k in predator_dist.keys():
-            if predator_dist[k] == curr_pos_predator_dist:
-                farther_from_predator[k]=predator_dist[k]
-
-
-        # Assigning the position accorinding to the given priorrity
-        if len(set(closer_to_prey).intersection(set(farther_from_predator))) != 0:
-            self.curr_pos=min(closer_to_prey, key=closer_to_prey.get)
-            #print("priority 1")
-
-        elif len(set(closer_to_prey).intersection(set(not_closer_to_predator))) !=0:
-            self.curr_pos=min(closer_to_prey, key=closer_to_prey.get)
-            #print("priority 2")
-
-        elif len(set(not_farther_from_prey).intersection(set(farther_from_predator))) !=0:
-            self.curr_pos=min(not_farther_from_prey, key=not_farther_from_prey.get)
-            #print("priority 3")
-
-        elif len(set(closer_to_prey).intersection(set(not_closer_to_predator))) !=0:
-            self.curr_pos=min(closer_to_prey, key=closer_to_prey.get)
-            #print("priority 4")
-
-        elif len(farther_from_predator) !=0:
-            self.curr_pos=max(farther_from_predator, key=farther_from_predator.get)
-            #print("priority 5")
-
-        elif len(not_closer_to_predator) != 0:
-            self.curr_pos=min(not_closer_to_predator, key=not_closer_to_predator.get)
-            #print("priority 6")
-
-        else:
-            pass
-            #print("Sitting and Praying")
-
-        #print(curr_pos_prey_dist,curr_pos_predator_dist)
-
-        print("Current pos" , self.curr_pos)
         """
 
         pos = utils.best_node(arena, self.curr_pos, prey_loc, predator_loc)
@@ -175,15 +99,16 @@ class Agent_3:
                     pass
                 else:
                     # Choose a node at random and assume it is where the prey is
-                    agent3.belief_state[node_surveyed] = 0
+                    agent3.prey_belief_state[node_surveyed] = 0
                     for i in range(50):
                         degree = utils.get_degree(arena, i)
                         if i != node_surveyed:
-                            agent3.belief_state[i] += 1/48 # Has to be phrased in the form of previous probability and next probability in terms of the degree of neighbours of this node
+                            agent3.prey_belief_state[i] += 1/48 # Has to be phrased in the form of previous probability and next probability in terms of the degree of neighbours of this node
                 """
 
-                believed_prey_curr_pos = utils.return_max_prey_belief(agent3.belief_state, arena)
+                believed_prey_curr_pos = utils.return_max_prey_belief(agent3.prey_belief_state, arena)
 
+                print(f'believed_prey_curr_pos: {believed_prey_curr_pos}')
                 #using the max belief node for prey
                 agent3.move(arena, believed_prey_curr_pos, predator.curr_pos)
 
