@@ -30,6 +30,7 @@ class Agent_3:
         self.curr_pos = random.choice(list_to_choose_from)
 
         self.belief_state = dict.fromkeys([i for i in range(50)], 1/49)
+        self.belief_state[self.curr_pos] = 0
         print(f'Initial belief state: {self.belief_state}')
 
     def move(self, arena, prey_loc, predator_loc):
