@@ -122,6 +122,129 @@ def get_shortest_path(start_pos, end_pos, arena):
     # print(f'a {type(path)}')
     return path, (len(path) - 1)
 
+def return_max_prey_belief(belief_state, arena):
+    """
+    Placeholder for now
+    """
+    # return max(belief_state, key = belief_state.get)
+    return random.randint(0,50)
+
+def return_max_predator_belief(belief_state, arena):
+    """
+    Placeholder for now
+    """
+    # return max(belief_state, key = belief_state.get)
+    return random.randint(0,50)
+
+#needs to be worked upon
+def best_node_v2(arena, curr_pos, prey_loc, predator_loc):
+    """
+    Returns the node that the agent should move to according to the following rules:
+    1. Neighbors that are closer to the Prey and farther from the Predator.
+    2. Neighbors that are closer to the Prey and not closer to the Predator.
+    3. Neighbors that are not farther from the Prey and farther from the Predator.
+    4. Neighbors that are not farther from the Prey and not closer to the Predator.
+    5. Neighbors that are farther from the Predator.
+    6. Neighbors that are not closer to the Predator.
+    7. Sit still and pray.
+
+    Parameters:
+    arena (dictionary): Adjacency list representing the graph
+    prey_loc (int): Location of prey
+    predator_loc (int): Location of Predator
+
+    Returns:
+    curr_pos (int): Position to move to
+    """
+
+    # Do not remove the following test cases
+    # curr_pos = 17
+    # curr_pos = 42
+
+    #print("Initial pos", curr_pos)
+    # Neighbours of the current node are extracted here
+    neighbours = arena[curr_pos].copy()
+
+    # Distances from prey and predator will be stored in the following dicts
+    predator_dist = {}
+    prey_dist = {}
+
+    # Storing the distances of the agent location to the prey and predator
+    path, curr_pos_prey_dist = get_shortest_path(curr_pos, prey_loc, arena)
+    path, curr_pos_predator_dist = get_shortest_path(curr_pos, predator_loc, arena)
+
+    # Find distance from all neighbours to the prey and the predator
+    for i in neighbours:
+        path, prey_dist[i] = get_shortest_path(i, prey_loc, arena)
+        path, predator_dist[i] = get_shortest_path(i, predator_loc, arena)
+
+    # Defining subsets of nodes
+    closer_to_prey = {}
+    not_farther_from_prey = {}
+    farther_from_predator = {}
+    not_closer_to_predator = {}
+
+    # Adding nodes to the subsets
+    for k in prey_dist.keys():
+        if prey_dist[k] < curr_pos_prey_dist:
+            closer_to_prey[k] = prey_dist[k]
+
+    for k in prey_dist.keys():
+        if prey_dist[k] == curr_pos_prey_dist:
+            not_farther_from_prey[k] = prey_dist[k]
+
+    for k in predator_dist.keys():
+        if predator_dist[k] >= curr_pos_predator_dist:
+            farther_from_predator[k] = predator_dist[k]
+
+    for k in predator_dist.keys():
+        if predator_dist[k] == curr_pos_predator_dist:
+            farther_from_predator[k] = predator_dist[k]
+
+    # Flag helps to avoid going through multiple ifs if one if condition is satisfied
+    flag = 0
+
+    # Assigning the position accorinding to the given priorrity
+    if len(set(closer_to_prey).intersection(set(farther_from_predator))) != 0 and flag == 0:
+        curr_pos = min(closer_to_prey, key=closer_to_prey.get)
+        #print("priority 1")
+        flag = 1
+
+    elif len(set(closer_to_prey).intersection(set(not_closer_to_predator))) != 0 and flag == 0:
+        curr_pos = min(closer_to_prey, key=closer_to_prey.get)
+        #print("priority 2")
+        flag = 1
+
+    elif len(set(not_farther_from_prey).intersection(set(farther_from_predator))) != 0 and flag == 0:
+        curr_pos = min(not_farther_from_prey, key=not_farther_from_prey.get)
+        #print("priority 3")
+        flag = 1
+
+    elif len(set(closer_to_prey).intersection(set(not_closer_to_predator))) != 0 and flag == 0:
+        curr_pos = min(closer_to_prey, key=closer_to_prey.get)
+        #print("priority 4")
+        flag = 1
+
+    elif len(farther_from_predator) != 0 and flag == 0:
+        curr_pos = max(farther_from_predator, key=farther_from_predator.get)
+        #print("priority 5")
+        flag = 1
+
+    elif len(not_closer_to_predator) != 0 and flag == 0:
+        curr_pos = min(not_closer_to_predator, key=not_closer_to_predator.get)
+        #print("priority 6")
+
+    else:
+        pass
+        #print("Sitting and Praying")
+        return 999
+
+    """print(curr_pos_prey_dist,curr_pos_predator_dist)
+    print(prey_dist,predator_dist)
+    print("pos after movement", curr_pos)"""
+
+    return curr_pos
+
 def best_node(arena, curr_pos, prey_loc, predator_loc):
     """
     Returns the node that the agent should move to according to the following rules:

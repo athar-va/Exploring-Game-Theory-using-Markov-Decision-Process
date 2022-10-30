@@ -5,13 +5,20 @@ import config
 import utils
 from prey import Prey
 from predator import Predator
+"""
+# Test Imports
+from pprint import pprint
+import environment as env
 
-class Agent_3:
+"""
+
+
+
+class Agent_2:
 
     def __init__(self, prey_loc, predator_loc):
         """
         Initializing the position of the Agent at locations where prey and predator are not present
-        Also initializes the belief state of the agent
 
         Parameters:
         self
@@ -29,13 +36,9 @@ class Agent_3:
 
         self.curr_pos = random.choice(list_to_choose_from)
 
-        self.belief_state = dict.fromkeys([i for i in range(50)], 1/49)
-        self.belief_state[self.curr_pos] = 0
-        print(f'Initial belief state: {self.belief_state}')
-
     def move(self, arena, prey_loc, predator_loc):
         """
-        Moves Agent 1 according to the given priority
+        Moves Agent 2 according to the given priority while prioritizing keeping distance to predator constant
 
         Parameters:
         self
@@ -120,7 +123,7 @@ class Agent_3:
         print("Current pos" , self.curr_pos)
         """
 
-        pos = utils.best_node(arena, self.curr_pos, prey_loc, predator_loc)
+        pos = utils.best_node_v2(arena, self.curr_pos, prey_loc, predator_loc)
 
         # Handling Sitting and praying case
         if pos == 999:
@@ -142,13 +145,16 @@ class Agent_3:
         # Initiating game variables
         game_count = 0
         step_count = 0
-        
+
         # Initiating variables for analysis
         win_count = 0
         loss_count = 0
         forced_termination = 0
+        # data = []
         data_row = []
 
+
+        # Config variable (To be transferred to a parameter file)
         number_of_games = config.NUMBER_OF_GAMES
         forced_termination_threshold = config.FORCED_TERMINATION_THRESHOLD
 
@@ -156,56 +162,34 @@ class Agent_3:
             # Creating objects
             prey = Prey()
             predator = Predator()
-            agent3 = Agent_3(prey.curr_pos, predator.curr_pos)
+            agent2 = Agent_2(prey.curr_pos, predator.curr_pos)
 
             step_count = 0
-            found_prey = False
+
             while 1:
-                print("In game Agent_3 at game_count: ", game_count, " step_count: ", step_count)
-                print(agent3.curr_pos, prey.curr_pos, predator.curr_pos)
-
-                """
-                # Survey a node initially without ever knowing where the prey is for a fact
-                if not found_prey:
-                    found_prey, node_surveyed = utils.survey_prey(agent3, prey)
-
-                # print(found_prey)
-                if found_prey:
-                    # found the prey and now have to use a variable assignment tree to track the prey
-                    pass
-                else:
-                    # Choose a node at random and assume it is where the prey is
-                    agent3.belief_state[node_surveyed] = 0
-                    for i in range(50):
-                        degree = utils.get_degree(arena, i)
-                        if i != node_surveyed:
-                            agent3.belief_state[i] += 1/48 # Has to be phrased in the form of previous probability and next probability in terms of the degree of neighbours of this node
-                """
-
-                believed_prey_curr_pos = utils.return_max_prey_belief(agent3.belief_state, arena)
-
-                #using the max belief node for prey
-                agent3.move(arena, believed_prey_curr_pos, predator.curr_pos)
+                print("In game Agent_2 at game_count: ", game_count, " step_count: ", step_count)
+                print(agent2.curr_pos, prey.curr_pos, predator.curr_pos)
+                agent2.move(arena, prey.curr_pos, predator.curr_pos)
 
                 # Checking termination states
-                if agent3.curr_pos == prey.curr_pos:
+                if agent2.curr_pos == prey.curr_pos:
                     win_count += 1
                     break
-                elif agent3.curr_pos == predator.curr_pos:
+                elif agent2.curr_pos == predator.curr_pos:
                     loss_count += 1
                     break
 
                 prey.move(arena)
 
                 # Checking termination states
-                if agent3.curr_pos == prey.curr_pos:
+                if agent2.curr_pos == prey.curr_pos:
                     win_count += 1
                     break
 
-                predator.move(agent3.curr_pos, arena)
+                predator.move(agent2.curr_pos, arena)
 
                 # Checking termination states
-                if agent3.curr_pos == predator.curr_pos:
+                if agent2.curr_pos == predator.curr_pos:
                     loss_count += 1
                     break
 
@@ -218,7 +202,7 @@ class Agent_3:
 
             game_count += 1
 
-        data_row = ["Agent_3", win_count * 100 / number_of_games, loss_count * 100 / number_of_games,
+        data_row = ["Agent_2", win_count * 100 / number_of_games, loss_count * 100 / number_of_games,
                     forced_termination * 100 / number_of_games]
         # data.append(data_row)
         return data_row
