@@ -88,11 +88,14 @@ class Agent_3:
                 print("In game Agent_3 at game_count: ", game_count, " step_count: ", step_count)
                 print(agent3.curr_pos, prey.curr_pos, predator.curr_pos)
 
-                """
+                
                 # Survey a node initially without ever knowing where the prey is for a fact
                 if not found_prey:
                     found_prey, node_surveyed = utils.survey_prey(agent3, prey)
+                #prey belief state will be updated here
+                agent3.prey_belief_state = utils.update_prey_belief_state(agent3.prey_belief_state, found_prey, 'after_survey')
 
+                """
                 # print(found_prey)
                 if found_prey:
                     # found the prey and now have to use a variable assignment tree to track the prey
@@ -120,8 +123,12 @@ class Agent_3:
                     loss_count += 1
                     break
 
+                # update belief state
+                agent3.prey_belief_state = utils.update_prey_belief_state(agent3.prey_belief_state, found_prey, 'after_agent_moves')
+
                 prey.move(arena)
 
+                agent3.prey_belief_state = utils.update_prey_belief_state(agent3.prey_belief_state, found_prey, 'after_prey_moves')
                 # Checking termination states
                 if agent3.curr_pos == prey.curr_pos:
                     win_count += 1
@@ -140,6 +147,8 @@ class Agent_3:
                 if step_count >= forced_termination_threshold:
                     forced_termination += 1
                     break
+
+                
 
             game_count += 1
 

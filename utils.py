@@ -4,6 +4,13 @@ import random
 
 import config
 
+def update_prey_belief_state(prey_belief_state, found_prey, checkpoint):
+    """Placeholder
+    Handles kind of updates based on found_prey
+    """
+    updated_prey_belief_state = prey_belief_state
+    return updated_prey_belief_state
+
 def get_degree(arena, node):
     """
     Gets the degree of the node
@@ -30,7 +37,7 @@ def survey_prey(agent, prey):
     node_to_survey (int): Returns the node surveyed
     """
 
-    belief_state = agent.belief_state
+    belief_state = agent.prey_belief_state
 
     # Selects all positions where the probability is max
     max_prob_of_prey = [pos for pos, prob in belief_state.items() if prob ==  max(belief_state.values())]
