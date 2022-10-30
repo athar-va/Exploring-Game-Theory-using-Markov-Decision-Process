@@ -4,12 +4,19 @@ import random
 
 import config
 
-def update_prey_belief_state(prey_belief_state, found_prey, checkpoint):
+def update_prey_belief_state(prey_belief_state, found_prey,surveyed_node, checkpoint):
     """Placeholder
     Handles kind of updates based on found_prey
     """
     updated_prey_belief_state = prey_belief_state
     return updated_prey_belief_state
+
+def update_predator_belief_state(predator_belief_state, found_predator,surveyed_node, checkpoint):
+    """Placeholder
+    Handles kind of updates based on found_prey
+    """
+    updated_predator_belief_state = predator_belief_state
+    return updated_predator_belief_state
 
 def get_degree(arena, node):
     """
