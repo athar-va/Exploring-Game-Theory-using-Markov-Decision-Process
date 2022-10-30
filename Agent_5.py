@@ -29,7 +29,7 @@ class Agent_5:
 
         self.curr_pos = random.choice(list_to_choose_from)
 
-        self.predator_belief_state= dict.fromkeys([i for i in range(50)], 0)
+        self.predator_belief_state = dict.fromkeys([i for i in range(50)], 0)
         self.predator_belief_state[predator_loc] = 1
 
 
@@ -84,63 +84,52 @@ class Agent_5:
             agent5 = Agent_5(prey.curr_pos, predator.curr_pos)
 
             step_count = 0
-            found_prey = False
+            found_predator = False
             while 1:
                 print("In game Agent_5 at game_count: ", game_count, " step_count: ", step_count)
                 print(agent5.curr_pos, prey.curr_pos, predator.curr_pos)
 
                 # Survey a node initially without ever knowing where the prey is for a fact
-                if not found_prey:
-                    found_prey, node_surveyed = utils.survey_prey(agent3, prey)
+                if not found_predator:
+                    found_predator, node_surveyed = utils.survey_predator(agent5, predator)
+
                 # prey belief state will be updated here
-                agent3.prey_belief_state = utils.update_prey_belief_state(agent3.prey_belief_state, found_prey,
+                agent5.predator_belief_state = utils.update_predator_belief_state(agent5.predator_belief_state, found_predator, node_surveyed,
                                                                           'after_survey')
 
-                """
-                # print(found_prey)
-                if found_prey:
-                    # found the prey and now have to use a variable assignment tree to track the prey
-                    pass
-                else:
-                    # Choose a node at random and assume it is where the prey is
-                    agent3.prey_belief_state[node_surveyed] = 0
-                    for i in range(50):
-                        degree = utils.get_degree(arena, i)
-                        if i != node_surveyed:
-                            agent3.prey_belief_state[i] += 1/48 # Has to be phrased in the form of previous probability and next probability in terms of the degree of neighbours of this node
-                """
 
-                believed_prey_curr_pos = utils.return_max_prey_belief(agent3.prey_belief_state, arena)
+                believed_predator_curr_pos = utils.return_max_predator_belief(agent5.prey_belief_state, arena)
 
-                print(f'believed_prey_curr_pos: {believed_prey_curr_pos}')
+                print(f'believed_prey_curr_pos: {believed_predator_curr_pos}')
                 # using the max belief node for prey
-                agent3.move(arena, believed_prey_curr_pos, predator.curr_pos)
+                agent5.move(arena, prey.curr_pos, believed_predator_curr_pos)
 
                 # Checking termination states
-                if agent3.curr_pos == prey.curr_pos:
+                if agent5.curr_pos == prey.curr_pos:
                     win_count += 1
                     break
-                elif agent3.curr_pos == predator.curr_pos:
+                elif agent5.curr_pos == predator.curr_pos:
                     loss_count += 1
                     break
 
                 # update belief state
-                agent3.prey_belief_state = utils.update_prey_belief_state(agent3.prey_belief_state, found_prey,
+                agent5.predator_belief_state = utils.update_predator_belief_state(agent5.predator_belief_state, found_predator, node_surveyed,
                                                                           'after_agent_moves')
 
                 prey.move(arena)
 
-                agent3.prey_belief_state = utils.update_prey_belief_state(agent3.prey_belief_state, found_prey,
-                                                                          'after_prey_moves')
+
                 # Checking termination states
-                if agent3.curr_pos == prey.curr_pos:
+                if agent5.curr_pos == prey.curr_pos:
                     win_count += 1
                     break
 
-                predator.move(agent3.curr_pos, arena)
+                predator.move(agent5.curr_pos, arena)
+
+                agent5.predator_belief_state = utils.update_prey_belief_state(agent5.predator_belief_state, found_predator, node_surveyed, 'after_prey_moves')
 
                 # Checking termination states
-                if agent3.curr_pos == predator.curr_pos:
+                if agent5.curr_pos == predator.curr_pos:
                     loss_count += 1
                     break
 
@@ -153,7 +142,7 @@ class Agent_5:
 
             game_count += 1
 
-        data_row = ["Agent_3", win_count * 100 / number_of_games, loss_count * 100 / number_of_games,
+        data_row = ["Agent_5", win_count * 100 / number_of_games, loss_count * 100 / number_of_games,
                     forced_termination * 100 / number_of_games]
         # data.append(data_row)
         return data_row

@@ -60,6 +60,34 @@ def survey_prey(agent, prey):
     else:
         return False, node_to_survey
 
+def survey_predator(agent, predator):
+    """
+    Surveys the node with the highest probability of the predator being there and updates the belief state accordingly
+
+    Parameters:
+    agent (object): Agent object
+    prey (object): Predator object
+
+    Returns:
+    found_predator (Bool): Returns True if found predator else False
+    node_to_survey (int): Returns the node surveyed
+    """
+
+    belief_state = agent.predator_belief_state
+
+    # Selects all positions where the probability is max
+    max_prob_of_predator = [pos for pos, prob in belief_state.items() if prob == max(belief_state.values())]
+
+    print(max_prob_of_predator)
+
+    node_to_survey = random.choice(max_prob_of_predator)
+
+    print(node_to_survey)
+
+    if node_to_survey == predator.curr_pos:
+        return True, node_to_survey
+    else:
+        return False, node_to_survey
 
 
 def store_data(data):
