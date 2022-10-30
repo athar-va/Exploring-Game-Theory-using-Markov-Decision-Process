@@ -98,7 +98,7 @@ class Agent_5:
                                                                           'after_survey')
 
 
-                believed_predator_curr_pos = utils.return_max_predator_belief(agent5.prey_belief_state, arena)
+                believed_predator_curr_pos = utils.return_max_predator_belief(agent5.predator_belief_state, arena)
 
                 print(f'believed_prey_curr_pos: {believed_predator_curr_pos}')
                 # using the max belief node for prey
