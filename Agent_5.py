@@ -90,8 +90,7 @@ class Agent_5:
                 print(agent5.curr_pos, prey.curr_pos, predator.curr_pos)
 
                 # Survey a node initially without ever knowing where the prey is for a fact
-                if not found_predator:
-                    found_predator, node_surveyed = utils.survey_predator(agent5, predator)
+                found_predator, node_surveyed = utils.survey_predator(agent5, predator)
 
                 # prey belief state will be updated here
                 agent5.predator_belief_state = utils.update_predator_belief_state(agent5.predator_belief_state, found_predator, node_surveyed,
