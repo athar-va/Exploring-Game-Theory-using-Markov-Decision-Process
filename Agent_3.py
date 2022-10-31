@@ -29,6 +29,8 @@ class Agent_3:
 
         self.curr_pos = random.choice(list_to_choose_from)
 
+        self.prev_pos = 999
+
         self.prey_belief_state = dict.fromkeys([i for i in range(50)], 1/49)
         self.prey_belief_state[self.curr_pos] = 0
         print(f'Initial belief state: {self.prey_belief_state}')
@@ -50,8 +52,9 @@ class Agent_3:
         if pos == 999:
             pass
         else:
+            self.prev_pos = self.curr_pos
             self.curr_pos = pos
-
+            
     def begin(arena):
         """
         Creates all the maze objects and plays number of games and collects data
@@ -87,13 +90,24 @@ class Agent_3:
             while 1:
                 print("In game Agent_3 at game_count: ", game_count, " step_count: ", step_count)
                 print(agent3.curr_pos, prey.curr_pos, predator.curr_pos)
-
                 
+                
+
                 # Survey a node initially without ever knowing where the prey is for a fact
                 found_prey, node_surveyed = utils.survey_prey(agent3, prey)
+                print(f'node surveyed: {node_surveyed}')
                 #prey belief state will be updated here
-                agent3.prey_belief_state = utils.update_prey_belief_state(agent3.prey_belief_state, found_prey, node_surveyed, 'after_survey')
-
+                agent3.prey_belief_state = utils.update_prey_belief_state(agent3.prey_belief_state, \
+                                                                            agent3.curr_pos, \
+                                                                            agent3.prev_pos, \
+                                                                            arena, \
+                                                                            found_prey, \
+                                                                            node_surveyed, \
+                                                                            'after_survey')
+                
+                print('belief state after survey:')
+                pprint(agent3.prey_belief_state)
+                print('sum of prob: ', sum(agent3.prey_belief_state.values()))
                 """
                 # print(found_prey)
                 if found_prey:
@@ -109,11 +123,10 @@ class Agent_3:
                 """
 
                 believed_prey_curr_pos = utils.return_max_prey_belief(agent3.prey_belief_state, arena)
-
                 print(f'believed_prey_curr_pos: {believed_prey_curr_pos}')
                 #using the max belief node for prey
                 agent3.move(arena, believed_prey_curr_pos, predator.curr_pos)
-
+                print(f'agent after movement: {agent3.curr_pos}')
                 # Checking termination states
                 if agent3.curr_pos == prey.curr_pos:
                     win_count += 1
@@ -123,16 +136,36 @@ class Agent_3:
                     break
 
                 # update belief state
-                agent3.prey_belief_state = utils.update_prey_belief_state(agent3.prey_belief_state, found_prey, node_surveyed, 'after_agent_moves')
+                agent3.prey_belief_state = utils.update_prey_belief_state(agent3.prey_belief_state, \
+                                                                            agent3.curr_pos, \
+                                                                            agent3.prev_pos, \
+                                                                            arena, \
+                                                                            found_prey, \
+                                                                            node_surveyed, \
+                                                                            'after_agent_moves')
+
+                print('belief state after_agent_moves:')
+                pprint(agent3.prey_belief_state)
+                print('sum of prob: ', sum(agent3.prey_belief_state.values()))
 
                 prey.move(arena)
 
-                agent3.prey_belief_state = utils.update_prey_belief_state(agent3.prey_belief_state, found_prey, node_surveyed, 'after_prey_moves')
                 # Checking termination states
                 if agent3.curr_pos == prey.curr_pos:
                     win_count += 1
                     break
 
+                agent3.prey_belief_state = utils.update_prey_belief_state(agent3.prey_belief_state, \
+                                                                            agent3.curr_pos, \
+                                                                            agent3.prev_pos, \
+                                                                            arena, \
+                                                                            found_prey, \
+                                                                            node_surveyed, \
+                                                                            'after_prey_moves')
+
+                print('belief state after_prey_moves:')
+                pprint(agent3.prey_belief_state)
+                print('sum of prob: ', sum(agent3.prey_belief_state.values()))
                 predator.move(agent3.curr_pos, arena)
 
                 # Checking termination states

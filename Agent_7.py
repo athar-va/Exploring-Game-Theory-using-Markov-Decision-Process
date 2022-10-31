@@ -129,7 +129,7 @@ class Agent_7:
                 print(f'believed_prey_curr_pos: {believed_prey_curr_pos}')
                 print(f'believed_predator_curr_pos: {believed_predator_curr_pos}')
                 #using the max belief node for prey
-                agent7.move(arena, believed_prey_curr_pos, predator.curr_pos)
+                agent7.move(arena, believed_prey_curr_pos, believed_predator_curr_pos)
 
                 # Checking termination states
                 if agent7.curr_pos == prey.curr_pos:

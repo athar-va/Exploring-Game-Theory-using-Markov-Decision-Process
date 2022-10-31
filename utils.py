@@ -1,15 +1,63 @@
 from collections import deque
 import csv
 import random
+from pprint import pprint
+
+from matplotlib.artist import get
 
 import config
 
-def update_prey_belief_state(prey_belief_state, found_prey, surveyed_node, checkpoint):
-    """Placeholder
-    Handles kind of updates based on found_prey
+def update_prey_belief_state(prey_belief_state, agent_curr_pos, agent_prev_pos, arena, found_prey, surveyed_node, checkpoint):
     """
-    updated_prey_belief_state = prey_belief_state
-    return updated_prey_belief_state
+    Handles kind of updates based on found_prey
+
+    Parameters:
+
+
+    Returns:
+    new_prey_belief_state (dict): The updated belief state
+    """
+
+    # Initializing the new prey belief states
+    new_prey_belief_state = dict.fromkeys([i for i in range(50)], 999.0)
+    new_prey_belief_state[agent_curr_pos] = 0.0
+
+    # After surveying the node
+    if checkpoint == 'after_survey':
+        if found_prey:
+            for i in range(50):
+                new_prey_belief_state[i] = 0.0
+            new_prey_belief_state[surveyed_node] = 1
+            return new_prey_belief_state
+        else:
+            new_prey_belief_state[surveyed_node] = 0
+            for i in range(50):
+                if i not in (agent_curr_pos, surveyed_node):
+                    new_prey_belief_state[i] = prey_belief_state[i] / ( sum(prey_belief_state.values()) - prey_belief_state[surveyed_node] )
+            return new_prey_belief_state
+    
+    elif checkpoint == 'after_agent_moves':
+        print(f'agent_curr_pos in func: {agent_curr_pos}')
+        new_prey_belief_state[agent_prev_pos] = 0.0
+        new_prey_belief_state[agent_curr_pos] = 0.0
+        new_prey_belief_state[surveyed_node] = 0.0
+        
+        for i in range(50):
+            if i not in (agent_curr_pos, agent_prev_pos, surveyed_node):
+                new_prey_belief_state[i] = prey_belief_state[i] / ( sum(prey_belief_state.values()) - prey_belief_state[agent_curr_pos] )
+        # print('in update func')
+        # pprint(new_prey_belief_state)
+        # exit(0)
+        return new_prey_belief_state
+
+    elif checkpoint == 'after_prey_moves':
+        for i in range(50):
+            temp_sum = 0.0
+            for j in arena[i]:
+                if i != agent_curr_pos:
+                    temp_sum += prey_belief_state[j] * 1 / ( get_degree(arena,j) + 1)
+            new_prey_belief_state[i] = temp_sum
+        return prey_belief_state
 
 def update_predator_belief_state(predator_belief_state, found_predator, surveyed_node, checkpoint):
     """Placeholder
