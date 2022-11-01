@@ -27,35 +27,43 @@ def update_prey_belief_state(prey_belief_state, agent_curr_pos, agent_prev_pos, 
         if found_prey:
             for i in range(50):
                 new_prey_belief_state[i] = 0.0
-            new_prey_belief_state[surveyed_node] = 1
+            new_prey_belief_state[surveyed_node] = 1.0
             return new_prey_belief_state
         else:
-            new_prey_belief_state[surveyed_node] = 0
+            new_prey_belief_state[surveyed_node] = 0.0
             for i in range(50):
                 if i not in (agent_curr_pos, surveyed_node):
-                    new_prey_belief_state[i] = prey_belief_state[i] / ( sum(prey_belief_state.values()) - prey_belief_state[surveyed_node] )
+                    new_prey_belief_state[i] = prey_belief_state[i] / ( sum(prey_belief_state.values()) - prey_belief_state[surveyed_node] - prey_belief_state[agent_curr_pos])
+            # print('in update func')
+            # pprint(new_prey_belief_state)
+            # print('sum of prob: ', sum(new_prey_belief_state.values()))
+            # exit(0)
             return new_prey_belief_state
     
     elif checkpoint == 'after_agent_moves':
-        print(f'agent_curr_pos in func: {agent_curr_pos}')
-        new_prey_belief_state[agent_prev_pos] = 0.0
-        new_prey_belief_state[agent_curr_pos] = 0.0
-        new_prey_belief_state[surveyed_node] = 0.0
-        
-        for i in range(50):
-            if i not in (agent_curr_pos, agent_prev_pos, surveyed_node):
-                new_prey_belief_state[i] = prey_belief_state[i] / ( sum(prey_belief_state.values()) - prey_belief_state[agent_curr_pos] )
-        # print('in update func')
-        # pprint(new_prey_belief_state)
-        # exit(0)
-        return new_prey_belief_state
+        if found_prey:
+            return prey_belief_state
+        else:
+            print(f'agent_curr_pos in func: {agent_curr_pos}')
+            new_prey_belief_state[agent_prev_pos] = 0.0
+            new_prey_belief_state[agent_curr_pos] = 0.0
+            new_prey_belief_state[surveyed_node] = 0.0
+            
+            for i in range(50):
+                if i not in (agent_curr_pos, agent_prev_pos, surveyed_node):
+                    new_prey_belief_state[i] = prey_belief_state[i] / ( sum(prey_belief_state.values()) - prey_belief_state[agent_curr_pos] - prey_belief_state[surveyed_node])
+            # print('in update func')
+            # pprint(new_prey_belief_state)
+            # print('sum of prob: ', sum(new_prey_belief_state.values()))
+            # exit(0)
+            return new_prey_belief_state
 
     elif checkpoint == 'after_prey_moves':
         new_prey_belief_state[agent_curr_pos] = 0.0
         for i in range(50):
             temp_sum = 0.0
-            for j in arena[i]:
-                if i != agent_curr_pos:
+            if i != agent_curr_pos:
+                for j in arena[i]:
                     temp_sum += prey_belief_state[j] / ( get_degree(arena, j) + 1 )
             temp_sum += prey_belief_state[i] / ( get_degree(arena, i) + 1 )
             new_prey_belief_state[i] = temp_sum
@@ -63,7 +71,7 @@ def update_prey_belief_state(prey_belief_state, agent_curr_pos, agent_prev_pos, 
         print('in update func')
         pprint(new_prey_belief_state)
         print('sum of prob: ', sum(new_prey_belief_state.values()))
-        # exit(0)
+        exit(0)
         return new_prey_belief_state
 
 def update_predator_belief_state(predator_belief_state, agent_curr_pos, agent_prev_pos, arena, found_predator, surveyed_node, checkpoint):
