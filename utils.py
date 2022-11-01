@@ -61,8 +61,8 @@ def update_prey_belief_state(prey_belief_state, agent_curr_pos, agent_prev_pos, 
     elif checkpoint == 'after_prey_moves':
         new_prey_belief_state[agent_curr_pos] = 0.0
 
-        # temp_prey_belief_state = dict.fromkeys([i for i in range(50)], 999.0)
-        # temp_prey_belief_state[agent_curr_pos] = 0.0
+        temp_prey_belief_state = dict.fromkeys([i for i in range(50)], 999.0)
+        temp_prey_belief_state[agent_curr_pos] = 0.0
 
         # for i in range(50):
         #     if i != agent_curr_pos:
@@ -71,25 +71,42 @@ def update_prey_belief_state(prey_belief_state, agent_curr_pos, agent_prev_pos, 
         # pprint(temp_prey_belief_state)
         # print('sum of prob: ', sum(temp_prey_belief_state.values()))
         # print('arena')
+        
+        # Test for degree
+        # for i in range(50):
+        #     temp_sum = 0.0
+        #     if i != agent_curr_pos:
+        #         if i not in arena[agent_curr_pos]:
+        #             for j in arena[i]:
+        #                 temp_sum += prey_belief_state[j] / ( get_degree(arena, j) + 1 )
+        #             temp_sum += prey_belief_state[i] / ( get_degree(arena, i) + 1 )
+        #         elif i in arena[agent_curr_pos]:
+        #             for j in arena[i]:
+        #                 temp_sum += prey_belief_state[j] / ( get_degree(arena, j))
+        #             temp_sum += prey_belief_state[i] / ( get_degree(arena, i))
+        #     new_prey_belief_state[i] = temp_sum
+        
+        # prey has moved
         for i in range(50):
             temp_sum = 0.0
+            for j in arena[i]:
+                temp_sum += prey_belief_state[j] / ( get_degree(arena, j) + 1 )
+            temp_sum += prey_belief_state[i] / ( get_degree(arena, i) + 1 )
+            temp_prey_belief_state[i] = temp_sum
+
+        # pretend to survey node for agent curr pos
+        new_prey_belief_state[agent_curr_pos] = 0.0
+        for i in range(50):
             if i != agent_curr_pos:
-                if i not in arena[agent_curr_pos]:
-                    for j in arena[i]:
-                        temp_sum += prey_belief_state[j] / ( get_degree(arena, j) + 1 )
-                    temp_sum += prey_belief_state[i] / ( get_degree(arena, i) + 1 )
-                elif i in arena[agent_curr_pos]:
-                    for j in arena[i]:
-                        temp_sum += prey_belief_state[j] / ( get_degree(arena, j))
-                    temp_sum += prey_belief_state[i] / ( get_degree(arena, i))
-            new_prey_belief_state[i] = temp_sum
-        
-        print('in update func')
-        pprint(new_prey_belief_state)
-        print('sum of prob: ', sum(new_prey_belief_state.values()))
-        print('arena')
-        pprint(arena)
-        exit(0)
+                new_prey_belief_state[i] = temp_prey_belief_state[i] / ( sum(temp_prey_belief_state.values()) - temp_prey_belief_state[agent_curr_pos])
+
+
+        # print('in update func')
+        # pprint(new_prey_belief_state)
+        # print('sum of prob: ', sum(new_prey_belief_state.values()))
+        # print('arena')
+        # pprint(arena)
+        # exit(0)
         return new_prey_belief_state
 
 def update_predator_belief_state(predator_belief_state, agent_curr_pos, agent_prev_pos, arena, found_predator, surveyed_node, checkpoint):
