@@ -55,8 +55,8 @@ def update_prey_belief_state(prey_belief_state, agent_curr_pos, agent_prev_pos, 
         for i in range(50):
             temp_sum = 0.0
             for j in arena[i]:
-                # if i != agent_curr_pos:
-                temp_sum += prey_belief_state[j] / ( get_degree(arena, j) + 1 )
+                if i != agent_curr_pos:
+                    temp_sum += prey_belief_state[j] / ( get_degree(arena, j) + 1 )
             temp_sum += prey_belief_state[i] / ( get_degree(arena, i) + 1 )
             new_prey_belief_state[i] = temp_sum
         
