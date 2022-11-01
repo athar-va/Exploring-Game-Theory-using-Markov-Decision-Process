@@ -29,6 +29,8 @@ class Agent_5:
 
         self.curr_pos = random.choice(list_to_choose_from)
 
+        self.prev_pos = 999
+
         self.predator_belief_state = dict.fromkeys([i for i in range(50)], 0)
         self.predator_belief_state[predator_loc] = 1
 
@@ -51,6 +53,7 @@ class Agent_5:
         if pos == 999:
             pass
         else:
+            self.prev_pos = self.curr_pos
             self.curr_pos = pos
 
     def begin(arena):
@@ -84,7 +87,8 @@ class Agent_5:
             agent5 = Agent_5(prey.curr_pos, predator.curr_pos)
 
             step_count = 0
-            found_predator = False
+            found_predator = True
+            believed_predator_curr_pos = predator.curr_pos
             while 1:
                 print("In game Agent_5 at game_count: ", game_count, " step_count: ", step_count)
                 print(agent5.curr_pos, prey.curr_pos, predator.curr_pos)
@@ -93,8 +97,13 @@ class Agent_5:
                 found_predator, node_surveyed = utils.survey_predator(agent5, predator)
 
                 # prey belief state will be updated here
-                agent5.predator_belief_state = utils.update_predator_belief_state(agent5.predator_belief_state, found_predator, node_surveyed,
-                                                                          'after_survey')
+                agent5.predator_belief_state = utils.update_predator_belief_state(agent5.predator_belief_state, \
+                                                                            agent5.curr_pos, \
+                                                                            agent5.prev_pos, \
+                                                                            arena, \
+                                                                            found_predator, \
+                                                                            node_surveyed, \
+                                                                            'after_survey')
 
 
                 believed_predator_curr_pos = utils.return_max_predator_belief(agent5.predator_belief_state, arena)
@@ -112,8 +121,13 @@ class Agent_5:
                     break
 
                 # update belief state
-                agent5.predator_belief_state = utils.update_predator_belief_state(agent5.predator_belief_state, found_predator, node_surveyed,
-                                                                          'after_agent_moves')
+                agent5.predator_belief_state = utils.update_predator_belief_state(agent5.predator_belief_state, \
+                                                                            agent5.curr_pos, \
+                                                                            agent5.prev_pos, \
+                                                                            arena, \
+                                                                            found_predator, \
+                                                                            node_surveyed, \
+                                                                            'after_agent_moves')
 
                 prey.move(arena)
 
@@ -125,7 +139,13 @@ class Agent_5:
 
                 predator.move(agent5.curr_pos, arena)
 
-                agent5.predator_belief_state = utils.update_prey_belief_state(agent5.predator_belief_state, found_predator, node_surveyed, 'after_prey_moves')
+                agent5.predator_belief_state = utils.update_predator_belief_state(agent5.predator_belief_state, \
+                                                                            agent5.curr_pos, \
+                                                                            agent5.prev_pos, \
+                                                                            arena, \
+                                                                            found_predator, \
+                                                                            node_surveyed, \
+                                                                            'after_predator_moves')
 
                 # Checking termination states
                 if agent5.curr_pos == predator.curr_pos:

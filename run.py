@@ -60,6 +60,7 @@ def run():
     # results.append(['Agent_1_Summary', a1_survival / config.NUMBER_OF_ARENAS, a1_dead / config.NUMBER_OF_ARENAS\
     #                 , a1_terminated / config.NUMBER_OF_ARENAS])
 
+    print(results)
 
     # utils.store_data(results)
     print("Final Data Collected !")

@@ -51,20 +51,35 @@ def update_prey_belief_state(prey_belief_state, agent_curr_pos, agent_prev_pos, 
         return new_prey_belief_state
 
     elif checkpoint == 'after_prey_moves':
+        new_prey_belief_state[agent_curr_pos] = 0.0
         for i in range(50):
             temp_sum = 0.0
             for j in arena[i]:
-                if i != agent_curr_pos:
-                    temp_sum += prey_belief_state[j] * 1 / ( get_degree(arena,j) + 1)
+                # if i != agent_curr_pos:
+                temp_sum += prey_belief_state[j] / ( get_degree(arena, j) + 1 )
+            temp_sum += prey_belief_state[i] / ( get_degree(arena, i) + 1 )
             new_prey_belief_state[i] = temp_sum
-        return prey_belief_state
+        
+        print('in update func')
+        pprint(new_prey_belief_state)
+        print('sum of prob: ', sum(new_prey_belief_state.values()))
+        # exit(0)
+        return new_prey_belief_state
 
-def update_predator_belief_state(predator_belief_state, found_predator, surveyed_node, checkpoint):
+def update_predator_belief_state(predator_belief_state, agent_curr_pos, agent_prev_pos, arena, found_predator, surveyed_node, checkpoint):
     """Placeholder
     Handles kind of updates based on found_prey
     """
-    updated_predator_belief_state = predator_belief_state
-    return updated_predator_belief_state
+    
+    # Initializing the new prey belief states
+    new_predator_belief_state = dict.fromkeys([i for i in range(50)], 999.0)
+    """
+    if checkpoint == 'after_survey':
+        
+    elif checkpoint == 'after_agent_moves':
+    
+    elif checkpoint == 'after_prey_moves':
+    """
 
 def get_degree(arena, node):
     """
