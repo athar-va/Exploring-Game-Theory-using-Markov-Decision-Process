@@ -12,6 +12,7 @@ from Agent_3 import Agent_3
 # from Agent_7 import Agent_7
 # from Agent_8 import Agent_8
 # from Agent_9 import Agent_9
+from test_agent import Agent_test
 import utils
 import config
 
@@ -28,15 +29,16 @@ def run():
 
     while no_of_arenas < config.NUMBER_OF_ARENAS:
         arena = env.generate_environement()
-        results.append(Agent_1.begin(arena))
+        #results.append(Agent_1.begin(arena))
         # results.append(Agent_2.begin(arena))
-        # results.append(Agent_3.begin(arena))
+        results.append(Agent_3.begin(arena))
         # results.append(Agent_4.begin(arena))
         # results.append(Agent_5.begin(arena))
         # results.append(Agent_6.begin(arena))
         # results.append(Agent_7.begin(arena))
         # results.append(Agent_8.begin(arena))
         # results.append(Agent_9.begin(arena))
+        # results.append(Agent_test.begin(arena))
 
         no_of_arenas += 1
     
