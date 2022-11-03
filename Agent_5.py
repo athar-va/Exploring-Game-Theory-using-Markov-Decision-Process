@@ -108,7 +108,7 @@ class Agent_5:
 
                 believed_predator_curr_pos = utils.return_max_predator_belief(agent5.predator_belief_state, arena)
 
-                print(f'believed_prey_curr_pos: {believed_predator_curr_pos}')
+                print(f'believed_predator_curr_pos: {believed_predator_curr_pos}')
                 # using the max belief node for prey
                 agent5.move(arena, prey.curr_pos, believed_predator_curr_pos)
 
@@ -137,7 +137,7 @@ class Agent_5:
                     win_count += 1
                     break
 
-                predator.move(agent5.curr_pos, arena)
+                predator.distracted_move(agent5.curr_pos, arena)
 
                 agent5.predator_belief_state = utils.update_predator_belief_state(agent5.predator_belief_state, \
                                                                             agent5.curr_pos, \

@@ -29,6 +29,8 @@ class Agent_7:
 
         self.curr_pos = random.choice(list_to_choose_from)
 
+        self.prev_pos = 999
+
         # Initialize prey belief state
         self.prey_belief_state = dict.fromkeys([i for i in range(50)], 1/49)
         self.prey_belief_state[self.curr_pos] = 0
@@ -56,6 +58,7 @@ class Agent_7:
         if pos == 999:
             pass
         else:
+            self.prev_pos = self.curr_pos
             self.curr_pos = pos
 
 
@@ -103,8 +106,21 @@ class Agent_7:
                     found_predator, node_surveyed = utils.survey_predator(agent7, predator)
                 
                 # updating both belief states
-                agent7.prey_belief_state = utils.update_prey_belief_state(agent7.prey_belief_state, found_prey, node_surveyed, 'after_survey')
-                agent7.predator_belief_state = utils.update_predator_belief_state(agent7.predator_belief_state, found_predator, node_surveyed, 'after_survey')
+                agent7.prey_belief_state = utils.update_prey_belief_state(agent7.prey_belief_state, \
+                                                                            agent7.curr_pos, \
+                                                                            agent7.prev_pos, \
+                                                                            arena, \
+                                                                            found_prey, \
+                                                                            node_surveyed, \
+                                                                            'after_survey')
+
+                agent7.predator_belief_state = utils.update_predator_belief_state(agent7.predator_belief_state, \
+                                                                            agent7.curr_pos, \
+                                                                            agent7.prev_pos, \
+                                                                            arena, \
+                                                                            found_predator, \
+                                                                            node_surveyed, \
+                                                                            'after_survey')
                 
                 
 
@@ -140,12 +156,31 @@ class Agent_7:
                     break
 
                 # update belief state
-                agent7.prey_belief_state = utils.update_prey_belief_state(agent7.prey_belief_state, found_prey, node_surveyed, 'after_agent_moves')
-                agent7.predator_belief_state = utils.update_predator_belief_state(agent7.predator_belief_state, found_predator, node_surveyed, 'after_agent_moves')
+                agent7.prey_belief_state = utils.update_prey_belief_state(agent7.prey_belief_state, \
+                                                                            agent7.curr_pos, \
+                                                                            agent7.prev_pos, \
+                                                                            arena, \
+                                                                            found_prey, \
+                                                                            node_surveyed, \
+                                                                            'after_agent_moves')
+
+                agent7.predator_belief_state = utils.update_predator_belief_state(agent7.predator_belief_state, \
+                                                                            agent7.curr_pos, \
+                                                                            agent7.prev_pos, \
+                                                                            arena, \
+                                                                            found_predator, \
+                                                                            node_surveyed, \
+                                                                            'after_agent_moves')
 
                 prey.move(arena)
 
-                agent7.prey_belief_state = utils.update_prey_belief_state(agent7.prey_belief_state, found_prey, node_surveyed, 'after_prey_moves')
+                agent7.prey_belief_state = utils.update_prey_belief_state(agent7.prey_belief_state, \
+                                                                            agent7.curr_pos, \
+                                                                            agent7.prev_pos, \
+                                                                            arena, \
+                                                                            found_prey, \
+                                                                            node_surveyed, \
+                                                                            'after_prey_moves')
                 
                 # Checking termination states
                 if agent7.curr_pos == prey.curr_pos:
@@ -154,7 +189,13 @@ class Agent_7:
 
                 predator.move(agent7.curr_pos, arena)
 
-                agent7.predator_belief_state = utils.update_predator_belief_state(agent7.predator_belief_state, found_predator, node_surveyed, 'after_predator_moves')
+                agent7.predator_belief_state = utils.update_predator_belief_state(agent7.predator_belief_state, \
+                                                                            agent7.curr_pos, \
+                                                                            agent7.prev_pos, \
+                                                                            arena, \
+                                                                            found_predator, \
+                                                                            node_surveyed, \
+                                                                            'after_predator_moves')
                 # Checking termination states
                 if agent7.curr_pos == predator.curr_pos:
                     loss_count += 1
