@@ -114,15 +114,44 @@ def update_predator_belief_state(predator_belief_state, agent_curr_pos, agent_pr
     Handles kind of updates based on found_prey
     """
     
-    # Initializing the new prey belief states
-    new_predator_belief_state = dict.fromkeys([i for i in range(50)], 999.0)
-    """
-    if checkpoint == 'after_survey':
-        
-    elif checkpoint == 'after_agent_moves':
+    # Initializing the new predator belief states
+    # new_predator_belief_state = dict.fromkeys([i for i in range(50)], 999.0)
+    new_predator_belief_state = predator_belief_state
     
-    elif checkpoint == 'after_prey_moves':
-    """
+    if checkpoint == 'after_survey':
+        if found_predator:
+            for i in range(50):
+                new_predator_belief_state[i] = 0.0
+            new_predator_belief_state[surveyed_node] = 1.0
+        else:
+            new_predator_belief_state[surveyed_node] = 0.0
+            for i in range(50):
+                if i not in (agent_curr_pos, surveyed_node):
+                    new_predator_belief_state[i] = predator_belief_state[i] / ( sum(predator_belief_state.values()) - predator_belief_state[surveyed_node])
+        return new_predator_belief_state
+    elif checkpoint == 'after_agent_moves':
+        if found_predator:
+            return predator_belief_state
+        else:
+            print(f'agent_curr_pos in func: {agent_curr_pos}')
+            new_predator_belief_state[agent_prev_pos] = 0.0
+            new_predator_belief_state[agent_curr_pos] = 0.0
+            new_predator_belief_state[surveyed_node] = 0.0
+            
+            for i in range(50):
+                if i not in (agent_curr_pos, agent_prev_pos, surveyed_node):
+                    new_predator_belief_state[i] = predator_belief_state[i] / ( sum(predator_belief_state.values()) - predator_belief_state[agent_curr_pos] - predator_belief_state[surveyed_node])
+            # print('in update func')
+            # pprint(new_prey_belief_state)
+            # print('sum of prob: ', sum(new_prey_belief_state.values()))
+            # exit(0)
+            return new_predator_belief_state
+    elif checkpoint == 'after_predator_moves':
+        max_prob_of_predator = [pos for pos, prob in predator_belief_state.items() if prob ==  max(predator_belief_state.values())]
+
+        believed_predator_pos = random.choice(max_prob_of_predator)
+
+        
 
 def get_degree(arena, node):
     """
