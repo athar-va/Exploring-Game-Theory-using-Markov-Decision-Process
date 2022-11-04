@@ -187,7 +187,7 @@ class Agent_7:
                     win_count += 1
                     break
 
-                predator.move(agent7.curr_pos, arena)
+                predator.distracted_move(agent7.curr_pos, arena)
 
                 agent7.predator_belief_state = utils.update_predator_belief_state(agent7.predator_belief_state, \
                                                                             agent7.curr_pos, \

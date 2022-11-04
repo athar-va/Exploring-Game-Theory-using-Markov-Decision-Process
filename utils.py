@@ -9,9 +9,16 @@ import config
 
 def update_prey_belief_state(prey_belief_state, agent_curr_pos, agent_prev_pos, arena, found_prey, surveyed_node, checkpoint):
     """
-    Handles kind of updates based on found_prey
+    Updates prey belief state
 
     Parameters:
+    prey_belief_state (dict): Stores prey's belief state
+    agent_curr_pos (int): Stores Agent's current position
+    agent_prev_pos (int): Stores Agent's previous position
+    arena (dict): Contains the graph
+    found_prey (bool): Contains prey is found status
+    surveyed_node (int): Contains the node that was surveyed by the agent
+    checkpoint (string): Describes which part of th function to run
 
 
     Returns:
@@ -113,8 +120,21 @@ def update_prey_belief_state(prey_belief_state, agent_curr_pos, agent_prev_pos, 
         return new_prey_belief_state
 
 def update_predator_belief_state(predator_belief_state, agent_curr_pos, agent_prev_pos, arena, found_predator, surveyed_node, checkpoint):
-    """Placeholder
-    Handles kind of updates based on found_prey
+    """
+    Updates predator belief state
+
+    Parameters:
+    predator_belief_state (dict): Stores predator's belief state
+    agent_curr_pos (int): Stores Agent's current position
+    agent_prev_pos (int): Stores Agent's previous position
+    arena (dict): Contains the graph
+    found_predator (bool): Contains predator is found status
+    surveyed_node (int): Contains the node that was surveyed by the agent
+    checkpoint (string): Describes which part of th function to run
+
+
+    Returns:
+    new_prey_belief_state (dict): The updated belief state
     """
     
     # Initializing the new predator belief states
@@ -371,17 +391,37 @@ def get_shortest_path(start_pos, end_pos, arena):
 
 def return_max_prey_belief(belief_state, arena):
     """
-    Placeholder for now
+    Returns a randomly chosen node for max belief of the prey
+
+    Parameters:
+    belief_state (dict): The belief state of the prey
+    arena (dict): Arena for the game
+
+    Returns:
+    random.choice(max_belief_nodes) (int): Random value from max beliefs
     """
     # return max(belief_state, key = belief_state.get)
-    return random.randint(0,49)
+    max_belief = max(belief_state.values())
+    max_belief_nodes = [key for key, value in belief_state.items() if value == max_belief ]
+
+    return random.choice(max_belief_nodes)
 
 def return_max_predator_belief(belief_state, arena):
     """
-    Placeholder for now
+    Returns a randomly chosen node for max belief of the predator
+
+    Parameters:
+    belief_state (dict): The belief state of the predator
+    arena (dict): Arena for the game
+
+    Returns:
+    random.choice(max_belief_nodes) (int): Random value from max beliefs
     """
     # return max(belief_state, key = belief_state.get)
-    return random.randint(0,49)
+    max_belief = max(belief_state.values())
+    max_belief_nodes = [key for key, value in belief_state.items() if value == max_belief ]
+
+    return random.choice(max_belief_nodes)
 
 #needs to be worked upon
 def best_node_v2(arena, curr_pos, prey_loc, predator_loc):
@@ -559,38 +599,59 @@ def best_node(arena, curr_pos, prey_loc, predator_loc):
     # Flag helps to avoid going through multiple ifs if one if condition is satisfied
     flag = 0
 
+    min_length = min(closer_to_prey.values())
+    focused_neighbours = [key for key, value in closer_to_prey.items() if value == min_length ]
+    curr_pos = random.choice(focused_neighbours)
+
     # Assigning the position accorinding to the given priorrity
     if len(set(closer_to_prey).intersection(set(farther_from_predator))) != 0 and flag == 0:
-        curr_pos = min(closer_to_prey, key=closer_to_prey.get)
+        # curr_pos = min(closer_to_prey, key=closer_to_prey.get)
+        min_length = min(closer_to_prey.values())
+        focused_neighbours = [key for key, value in closer_to_prey.items() if value == min_length ]
+        curr_pos = random.choice(focused_neighbours)
         #print("priority 1")
         flag = 1
 
     elif len(set(closer_to_prey).intersection(set(not_closer_to_predator))) != 0 and flag == 0:
-        curr_pos = min(closer_to_prey, key=closer_to_prey.get)
+        # curr_pos = min(closer_to_prey, key=closer_to_prey.get)
+        min_length = min(closer_to_prey.values())
+        focused_neighbours = [key for key, value in closer_to_prey.items() if value == min_length ]
+        curr_pos = random.choice(focused_neighbours)
         #print("priority 2")
         flag = 1
 
     elif len(set(not_farther_from_prey).intersection(set(farther_from_predator))) != 0 and flag == 0:
-        curr_pos = min(not_farther_from_prey, key=not_farther_from_prey.get)
+        # curr_pos = min(not_farther_from_prey, key=not_farther_from_prey.get)
+        min_length = min(not_farther_from_prey.values())
+        focused_neighbours = [key for key, value in not_farther_from_prey.items() if value == min_length ]
+        curr_pos = random.choice(focused_neighbours)
         #print("priority 3")
         flag = 1
 
     elif len(set(closer_to_prey).intersection(set(not_closer_to_predator))) != 0 and flag == 0:
-        curr_pos = min(closer_to_prey, key=closer_to_prey.get)
+        # curr_pos = min(closer_to_prey, key=closer_to_prey.get)
+        min_length = min(closer_to_prey.values())
+        focused_neighbours = [key for key, value in closer_to_prey.items() if value == min_length ]
+        curr_pos = random.choice(focused_neighbours)
         #print("priority 4")
         flag = 1
 
     elif len(farther_from_predator) != 0 and flag == 0:
-        curr_pos = max(farther_from_predator, key=farther_from_predator.get)
+        # curr_pos = max(farther_from_predator, key=farther_from_predator.get)
+        min_length = min(farther_from_predator.values())
+        focused_neighbours = [key for key, value in farther_from_predator.items() if value == min_length ]
+        curr_pos = random.choice(focused_neighbours)
         #print("priority 5")
         flag = 1
 
     elif len(not_closer_to_predator) != 0 and flag == 0:
-        curr_pos = min(not_closer_to_predator, key=not_closer_to_predator.get)
+        # curr_pos = min(not_closer_to_predator, key=not_closer_to_predator.get)
+        min_length = min(not_closer_to_predator.values())
+        focused_neighbours = [key for key, value in not_closer_to_predator.items() if value == min_length ]
+        curr_pos = random.choice(focused_neighbours)
         #print("priority 6")
 
     else:
-        pass
         #print("Sitting and Praying")
         return 999
 
