@@ -4,13 +4,13 @@ import environment as env
 from prey import Prey
 from predator import Predator
 from Agent_1 import Agent_1
-# from Agent_2 import Agent_2
+from Agent_2 import Agent_2
 from Agent_3 import Agent_3
-# from Agent_4 import Agent_4
+from Agent_4 import Agent_4
 from Agent_5 import Agent_5
-# from Agent_6 import Agent_6
+from Agent_6 import Agent_6
 from Agent_7 import Agent_7
-# from Agent_8 import Agent_8
+from Agent_8 import Agent_8
 # from Agent_9 import Agent_9
 from test_agent import Agent_test
 import utils
@@ -29,17 +29,18 @@ def run():
 
     while no_of_arenas < config.NUMBER_OF_ARENAS:
         arena = env.generate_environement()
-        results.append(Agent_1.begin(arena))
+        #results.append(Agent_1.begin(arena))
         # results.append(Agent_2.begin(arena))
-        results.append(Agent_3.begin(arena))
+        #results.append(Agent_3.begin(arena))
         # results.append(Agent_4.begin(arena))
-        results.append(Agent_5.begin(arena))
+        #results.append(Agent_5.begin(arena))
         # results.append(Agent_6.begin(arena))
-        results.append(Agent_7.begin(arena))
-        # results.append(Agent_8.begin(arena))
+        #results.append(Agent_7.begin(arena))
+        results.append(Agent_8.begin(arena))
         # results.append(Agent_9.begin(arena))
         # results.append(Agent_test.begin(arena))
 
+        print(no_of_arenas)
         no_of_arenas += 1
     
     #wrote something for summarizing metrics across all arenas, should convert to a function later
