@@ -80,6 +80,7 @@ class Agent_5:
         number_of_games = config.NUMBER_OF_GAMES
         forced_termination_threshold = config.FORCED_TERMINATION_THRESHOLD
 
+        predator_certainty = 0.0
         while game_count < number_of_games:
             # Creating objects
             prey = Prey()
@@ -89,6 +90,7 @@ class Agent_5:
             step_count = 0
             found_predator = True
             believed_predator_curr_pos = predator.curr_pos
+            predator_certainty_counter = 0
             while 1:
                 print("In game Agent_5 at game_count: ", game_count, " step_count: ", step_count)
                 print(agent5.curr_pos, prey.curr_pos, predator.curr_pos)
@@ -105,10 +107,11 @@ class Agent_5:
                                                                             node_surveyed, \
                                                                             'after_survey')
 
-
+                if max(agent5.predator_belief_state.values()) == 1:
+                    predator_certainty_counter += 1
                 believed_predator_curr_pos = utils.return_max_predator_belief(agent5.predator_belief_state, arena)
 
-                print(f'believed_predator_curr_pos: {believed_predator_curr_pos}')
+                # print(f'believed_predator_curr_pos: {believed_predator_curr_pos}')
                 # using the max belief node for prey
                 agent5.move(arena, prey.curr_pos, believed_predator_curr_pos)
 
@@ -158,10 +161,13 @@ class Agent_5:
                 if step_count >= forced_termination_threshold:
                     forced_termination += 1
                     break
-
+            if step_count != 0:
+                predator_certainty += predator_certainty_counter / step_count
+            else:
+                predator_certainty = 1.0
             game_count += 1
 
         data_row = ["Agent_5", win_count * 100 / number_of_games, loss_count * 100 / number_of_games,
-                    forced_termination * 100 / number_of_games]
+                    forced_termination * 100 / number_of_games, 100.0, predator_certainty * 100 / number_of_games]
         # data.append(data_row)
         return data_row

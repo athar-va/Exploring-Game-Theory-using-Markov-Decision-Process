@@ -80,6 +80,7 @@ class Agent_4:
         number_of_games = config.NUMBER_OF_GAMES
         forced_termination_threshold = config.FORCED_TERMINATION_THRESHOLD
 
+        prey_certainty = 0.0
         while game_count < number_of_games:
             # Creating objects
             prey = Prey()
@@ -88,13 +89,14 @@ class Agent_4:
 
             step_count = 0
             found_prey = False
+            prey_certainty_counter = 0
             while 1:
                 print("In game Agent_4 at game_count: ", game_count, " step_count: ", step_count)
                 print(agent4.curr_pos, prey.curr_pos, predator.curr_pos)
 
                 # Survey a node initially without ever knowing where the prey is for a fact
                 found_prey, node_surveyed = utils.survey_prey(agent4, prey)
-                print(f'node surveyed: {node_surveyed}')
+                # print(f'node surveyed: {node_surveyed}')
                 # prey belief state will be updated here
                 agent4.prey_belief_state = utils.update_prey_belief_state(agent4.prey_belief_state, \
                                                                           agent4.curr_pos, \
@@ -103,10 +105,11 @@ class Agent_4:
                                                                           found_prey, \
                                                                           node_surveyed, \
                                                                           'after_survey')
-
+                if max(agent4.prey_belief_state.values()) == 1:
+                    prey_certainty_counter += 1
                 # print('belief state after survey:')
                 # pprint(agent4.prey_belief_state)
-                print('sum of prob: ', sum(agent4.prey_belief_state.values()))
+                # print('sum of prob: ', sum(agent4.prey_belief_state.values()))
 
                 believed_prey_curr_pos = utils.return_max_prey_belief(agent4.prey_belief_state, arena)
                 # print(f'believed_prey_curr_pos: {believed_prey_curr_pos}')
@@ -132,7 +135,7 @@ class Agent_4:
 
                 # print('belief state after_agent_moves:')
                 # pprint(agent4.prey_belief_state)
-                print('sum of prob: ', sum(agent4.prey_belief_state.values()))
+                # print('sum of prob: ', sum(agent4.prey_belief_state.values()))
 
                 prey.move(arena)
 
@@ -151,7 +154,7 @@ class Agent_4:
 
                 # print('belief state after_prey_moves:')
                 # pprint(agent4.prey_belief_state)
-                print('sum of prob: ', sum(agent4.prey_belief_state.values()))
+                # print('sum of prob: ', sum(agent4.prey_belief_state.values()))
                 predator.move(agent4.curr_pos, arena)
 
                 # Checking termination states
@@ -165,10 +168,14 @@ class Agent_4:
                 if step_count >= forced_termination_threshold:
                     forced_termination += 1
                     break
+            if step_count != 0:
+                prey_certainty += prey_certainty_counter / step_count
+            else:
+                prey_certainty = 0.0
 
             game_count += 1
 
         data_row = ["Agent_4", win_count * 100 / number_of_games, loss_count * 100 / number_of_games,
-                    forced_termination * 100 / number_of_games]
+                    forced_termination * 100 / number_of_games, prey_certainty * 100 / number_of_games, 100.0]
         # data.append(data_row)
         return data_row

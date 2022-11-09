@@ -35,12 +35,12 @@ class Agent_7_wdd:
         # Initialize prey belief state
         self.prey_belief_state = dict.fromkeys([i for i in range(50)], 1 / 49)
         self.prey_belief_state[self.curr_pos] = 0
-        print(f'Initial prey belief state: {self.prey_belief_state}')
+        # print(f'Initial prey belief state: {self.prey_belief_state}')
 
         # Initialize peadator belief state
         self.predator_belief_state = dict.fromkeys([i for i in range(50)], 0)
         self.predator_belief_state[predator_loc] = 1
-        print(f'Initial predator belief state: {self.predator_belief_state}')
+        # print(f'Initial predator belief state: {self.predator_belief_state}')
 
     def move(self, arena, prey_loc, predator_loc):
         """
@@ -145,8 +145,8 @@ class Agent_7_wdd:
                 believed_prey_curr_pos = utils.return_max_prey_belief(agent7_wdd.prey_belief_state, arena)
                 believed_predator_curr_pos = utils.return_max_predator_belief(agent7_wdd.predator_belief_state, arena)
 
-                print(f'believed_prey_curr_pos: {believed_prey_curr_pos}')
-                print(f'believed_predator_curr_pos: {believed_predator_curr_pos}')
+                # print(f'believed_prey_curr_pos: {believed_prey_curr_pos}')
+                # print(f'believed_predator_curr_pos: {believed_predator_curr_pos}')
                 # using the max belief node for prey
                 agent7_wdd.move(arena, believed_prey_curr_pos, believed_predator_curr_pos)
 

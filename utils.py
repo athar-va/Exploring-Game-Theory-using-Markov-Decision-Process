@@ -19,7 +19,7 @@ def update_prey_belief_state(prey_belief_state, agent_curr_pos, agent_prev_pos, 
     arena (dict): Contains the graph
     found_prey (bool): Contains prey is found status
     surveyed_node (int): Contains the node that was surveyed by the agent
-    checkpoint (string): Describes which part of th function to run
+    checkpoint (string): Describes which part of the function to run
 
 
     Returns:
@@ -44,8 +44,8 @@ def update_prey_belief_state(prey_belief_state, agent_curr_pos, agent_prev_pos, 
                     new_prey_belief_state[i] = prey_belief_state[i] / ( sum(prey_belief_state.values()) - prey_belief_state[surveyed_node] - prey_belief_state[agent_curr_pos])
             # print('in update func')
             # pprint(new_prey_belief_state)
-            print('in update prey belief func after_survey')
-            print('sum of prob: ', sum(new_prey_belief_state.values()))
+            # print('in update prey belief func after_survey')
+            # print('sum of prob: ', sum(new_prey_belief_state.values()))
             # exit(0)
             return new_prey_belief_state
     
@@ -53,7 +53,7 @@ def update_prey_belief_state(prey_belief_state, agent_curr_pos, agent_prev_pos, 
         if found_prey:
             return prey_belief_state
         else:
-            print(f'agent_curr_pos in func: {agent_curr_pos}')
+            # print(f'agent_curr_pos in func: {agent_curr_pos}')
             new_prey_belief_state[agent_prev_pos] = 0.0
             new_prey_belief_state[agent_curr_pos] = 0.0
             new_prey_belief_state[surveyed_node] = 0.0
@@ -63,8 +63,8 @@ def update_prey_belief_state(prey_belief_state, agent_curr_pos, agent_prev_pos, 
                     new_prey_belief_state[i] = prey_belief_state[i] / ( sum(prey_belief_state.values()) - prey_belief_state[agent_curr_pos] - prey_belief_state[surveyed_node])
             # print('in update func')
             # pprint(new_prey_belief_state)
-            print('in update prey belief func after_agent_moves')
-            print('sum of prob: ', sum(new_prey_belief_state.values()))
+            # print('in update prey belief func after_agent_moves')
+            # print('sum of prob: ', sum(new_prey_belief_state.values()))
             # exit(0)
             return new_prey_belief_state
 
@@ -113,8 +113,8 @@ def update_prey_belief_state(prey_belief_state, agent_curr_pos, agent_prev_pos, 
 
         # print('in update func')
         # pprint(new_prey_belief_state)
-        print('in update prey belief func after_prey_moves')
-        print('sum of prob: ', sum(new_prey_belief_state.values()))
+        # print('in update prey belief func after_prey_moves')
+        # print('sum of prob: ', sum(new_prey_belief_state.values()))
         # print('arena')
         # pprint(arena)
         # exit(0)
@@ -131,7 +131,7 @@ def update_predator_belief_state(predator_belief_state, agent_curr_pos, agent_pr
     arena (dict): Contains the graph
     found_predator (bool): Contains predator is found status
     surveyed_node (int): Contains the node that was surveyed by the agent
-    checkpoint (string): Describes which part of th function to run
+    checkpoint (string): Describes which part of the function to run
 
 
     Returns:
@@ -155,8 +155,8 @@ def update_predator_belief_state(predator_belief_state, agent_curr_pos, agent_pr
                     new_predator_belief_state[i] = predator_belief_state[i] / ( sum(predator_belief_state.values()) - predator_belief_state[surveyed_node])
         # print('in update func')
         # pprint(new_predator_belief_state)
-        print('in update predator belief func after_survey')
-        print('sum of prob: ', sum(new_predator_belief_state.values()))
+        # print('in update predator belief func after_survey')
+        # print('sum of prob: ', sum(new_predator_belief_state.values()))
         # exit(0)
         return new_predator_belief_state
 
@@ -171,7 +171,7 @@ def update_predator_belief_state(predator_belief_state, agent_curr_pos, agent_pr
             return predator_belief_state
             
         else:
-            print(f'agent_curr_pos in func: {agent_curr_pos}')
+            # print(f'agent_curr_pos in func: {agent_curr_pos}')
             new_predator_belief_state[agent_prev_pos] = 0.0
             new_predator_belief_state[agent_curr_pos] = 0.0
             new_predator_belief_state[surveyed_node] = 0.0
@@ -181,8 +181,8 @@ def update_predator_belief_state(predator_belief_state, agent_curr_pos, agent_pr
                     new_predator_belief_state[i] = predator_belief_state[i] / ( sum(predator_belief_state.values()) - predator_belief_state[agent_curr_pos] - predator_belief_state[surveyed_node])
             # print('in update func')
             # pprint(new_predator_belief_state)
-            print('in update predator belief func after_agent_moves')
-            print('sum of prob: ', sum(new_predator_belief_state.values()))
+            # print('in update predator belief func after_agent_moves')
+            # print('sum of prob: ', sum(new_predator_belief_state.values()))
             # exit(0)
             return new_predator_belief_state
 
@@ -234,9 +234,9 @@ def update_predator_belief_state(predator_belief_state, agent_curr_pos, agent_pr
             if i != agent_curr_pos:
                 new_predator_belief_state[i] = temp_predator_belief_state[i] / ( sum(temp_predator_belief_state.values()) - temp_predator_belief_state[agent_curr_pos])
         
-        print('in update predator belief func after predator moves')
+        # print('in update predator belief func after predator moves')
         # pprint(new_predator_belief_state)
-        print('sum of prob: ', sum(new_predator_belief_state.values()))
+        # print('sum of prob: ', sum(new_predator_belief_state.values()))
         # exit(0)
         return new_predator_belief_state
 
@@ -271,11 +271,11 @@ def survey_prey(agent, prey):
     # Selects all positions where the probability is max
     max_prob_of_prey = [pos for pos, prob in belief_state.items() if prob ==  max(belief_state.values())]
 
-    print(max_prob_of_prey)
+    # print(max_prob_of_prey)
 
     node_to_survey = random.choice(max_prob_of_prey)
 
-    print(node_to_survey)
+    # print(node_to_survey)
 
     if node_to_survey == prey.curr_pos:
         return True, node_to_survey
@@ -300,11 +300,11 @@ def survey_predator(agent, predator):
     # Selects all positions where the probability is max
     max_prob_of_predator = [pos for pos, prob in belief_state.items() if prob == max(belief_state.values())]
 
-    print(max_prob_of_predator)
+    # print(max_prob_of_predator)
 
     node_to_survey = random.choice(max_prob_of_predator)
 
-    print(node_to_survey)
+    # print(node_to_survey)
 
     if node_to_survey == predator.curr_pos:
         return True, node_to_survey
@@ -632,8 +632,8 @@ def update_prey_belief_state_defective_drone(prey_belief_state, agent_curr_pos, 
                             sum(prey_belief_state.values()) - (0.9 * prey_belief_state[surveyed_node]))
             # print('in update func')
             # pprint(new_prey_belief_state)
-            print('in update prey belief func after_survey')
-            print('sum of prob: ', sum(new_prey_belief_state.values()))
+            # print('in update prey belief func after_survey')
+            # print('sum of prob: ', sum(new_prey_belief_state.values()))
             # exit(0)
             return new_prey_belief_state
 
@@ -641,7 +641,7 @@ def update_prey_belief_state_defective_drone(prey_belief_state, agent_curr_pos, 
         if found_prey:
             return prey_belief_state
         else:
-            print(f'agent_curr_pos in func: {agent_curr_pos}')
+            # print(f'agent_curr_pos in func: {agent_curr_pos}')
             new_prey_belief_state[agent_prev_pos] = 0.0
             new_prey_belief_state[agent_curr_pos] = 0.0
             # new_prey_belief_state[surveyed_node] = 0.0
@@ -655,8 +655,8 @@ def update_prey_belief_state_defective_drone(prey_belief_state, agent_curr_pos, 
                     new_prey_belief_state[i] = prey_belief_state[i] / (sum(prey_belief_state.values()) - prey_belief_state[agent_curr_pos])
             # print('in update func')
             # pprint(new_prey_belief_state)
-            print('in update prey belief func after_agent_moves')
-            print('sum of prob: ', sum(new_prey_belief_state.values()))
+            # print('in update prey belief func after_agent_moves')
+            # print('sum of prob: ', sum(new_prey_belief_state.values()))
             # exit(0)
             return new_prey_belief_state
 
@@ -683,8 +683,8 @@ def update_prey_belief_state_defective_drone(prey_belief_state, agent_curr_pos, 
 
         # print('in update func')
         # pprint(new_prey_belief_state)
-        print('in update prey belief func after_prey_moves')
-        print('sum of prob: ', sum(new_prey_belief_state.values()))
+        # print('in update prey belief func after_prey_moves')
+        # print('sum of prob: ', sum(new_prey_belief_state.values()))
         # print('arena')
         # pprint(arena)
         # exit(0)
@@ -702,7 +702,7 @@ def update_predator_belief_state_defective_drone(predator_belief_state, agent_cu
     arena (dict): Contains the graph
     found_predator (bool): Contains predator is found status
     surveyed_node (int): Contains the node that was surveyed by the agent
-    checkpoint (string): Describes which part of th function to run
+    checkpoint (string): Describes which part of the function to run
 
 
     Returns:
@@ -731,8 +731,8 @@ def update_predator_belief_state_defective_drone(predator_belief_state, agent_cu
 
         # print('in update func')
         # pprint(new_predator_belief_state)
-        print('in update predator belief func after_survey')
-        print('sum of prob: ', sum(new_predator_belief_state.values()))
+        # print('in update predator belief func after_survey')
+        # print('sum of prob: ', sum(new_predator_belief_state.values()))
         # exit(0)
         return new_predator_belief_state
 
@@ -747,7 +747,7 @@ def update_predator_belief_state_defective_drone(predator_belief_state, agent_cu
             return predator_belief_state
 
         else:
-            print(f'agent_curr_pos in func: {agent_curr_pos}')
+            # print(f'agent_curr_pos in func: {agent_curr_pos}')
             new_predator_belief_state[agent_prev_pos] = 0.0
             new_predator_belief_state[agent_curr_pos] = 0.0
             # new_predator_belief_state[surveyed_node] = 0.0
@@ -759,8 +759,8 @@ def update_predator_belief_state_defective_drone(predator_belief_state, agent_cu
                     new_predator_belief_state[i] = predator_belief_state[i] / (sum(predator_belief_state.values()) - predator_belief_state[agent_curr_pos])
             # print('in update func')
             # pprint(new_predator_belief_state)
-            print('in update predator belief func after_agent_moves')
-            print('sum of prob: ', sum(new_predator_belief_state.values()))
+            # print('in update predator belief func after_agent_moves')
+            # print('sum of prob: ', sum(new_predator_belief_state.values()))
             # exit(0)
             return new_predator_belief_state
 
@@ -810,8 +810,8 @@ def update_predator_belief_state_defective_drone(predator_belief_state, agent_cu
                 new_predator_belief_state[i] = temp_predator_belief_state[i] / (
                             sum(temp_predator_belief_state.values()) - temp_predator_belief_state[agent_curr_pos])
 
-        print('in update predator belief func after predator moves')
+        # print('in update predator belief func after predator moves')
         # pprint(new_predator_belief_state)
-        print('sum of prob: ', sum(new_predator_belief_state.values()))
+        # print('sum of prob: ', sum(new_predator_belief_state.values()))
         # exit(0)
         return new_predator_belief_state

@@ -203,7 +203,7 @@ class Agent_1:
             game_count += 1
 
         data_row = ["Agent_1", win_count * 100 / number_of_games, loss_count * 100 / number_of_games,
-                    forced_termination * 100 / number_of_games]
+                    forced_termination * 100 / number_of_games, 100.0, 100.0]
         # data.append(data_row)
         return data_row
 
