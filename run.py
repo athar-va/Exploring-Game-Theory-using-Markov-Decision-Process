@@ -14,7 +14,7 @@ from Agent_8 import Agent_8
 from Agent_7_with_defective_drone import Agent_7_wdd
 from Agent_7_wdd_handled import Agent_7_wdd_handled
 # from Agent_9 import Agent_9
-from test_agent import Agent_test
+# from test_agent import Agent_7
 import utils
 import config
 
@@ -34,9 +34,9 @@ def run():
         arena = env.generate_environement()
         # results.append(Agent_1.begin(arena))
         # results.append(Agent_2.begin(arena))
-        results.append(Agent_3.begin(arena))
+        # results.append(Agent_3.begin(arena))
         # results.append(Agent_4.begin(arena))
-        #results.append(Agent_5.begin(arena))
+        results.append(Agent_5.begin(arena))
         # results.append(Agent_6.begin(arena))
         # results.append(Agent_7.begin(arena))
         # results.append(Agent_8.begin(arena))
