@@ -36,15 +36,16 @@ def run():
         # results.append(Agent_2.begin(arena))
         # results.append(Agent_3.begin(arena))
         # results.append(Agent_4.begin(arena))
-        results.append(Agent_5.begin(arena))
+        # results.append(Agent_5.begin(arena))
         # results.append(Agent_6.begin(arena))
-        # results.append(Agent_7.begin(arena))
+        results.append(Agent_7.begin(arena))
         # results.append(Agent_8.begin(arena))
         # results.append(Agent_7_wdd.begin(arena))
         # results.append(Agent_7_wdd_handled.begin(arena))
         # results.append(Agent_9.begin(arena))
         # results.append(Agent_test.begin(arena))
 
+        print('-'*100)
         print(f'arena number: {no_of_arenas}')
         no_of_arenas += 1
     

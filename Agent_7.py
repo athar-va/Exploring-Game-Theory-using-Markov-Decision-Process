@@ -99,6 +99,7 @@ class Agent_7:
             found_predator = True
             prey_certainty_counter = 0
             predator_certainty_counter = 0
+            believed_predator_curr_pos = predator.curr_pos
             while 1:
                 print("In game Agent_7 at game_count: ", game_count, " step_count: ", step_count)
                 print(agent7.curr_pos, prey.curr_pos, predator.curr_pos)
@@ -106,19 +107,19 @@ class Agent_7:
 
                 # Check if it knows where the predator is
                 if max(agent7.predator_belief_state.values()) == 1.0:
-                    found_prey, prey_node_surveyed = utils.survey_prey(agent7, prey)
+                    found_prey, node_surveyed = utils.survey_prey(agent7, prey)
                 else:
-                    found_predator, predator_node_surveyed = utils.survey_predator(agent7, predator)
+                    found_predator, node_surveyed = utils.survey_predator(agent7, predator)
 
-                if prey_node_surveyed != None:
-                    node_surveyed = prey_node_surveyed
-                    if prey_node_surveyed == predator.curr_pos:
-                        found_predator = True
+                # if prey_node_surveyed != None:
+                #     node_surveyed = prey_node_surveyed
+                #     if prey_node_surveyed == predator.curr_pos:
+                #         found_predator = True
 
-                else:
-                    node_surveyed = predator_node_surveyed
-                    if predator_node_surveyed == prey.curr_pos:
-                        found_prey = True
+                # else:
+                #     node_surveyed = predator_node_surveyed
+                #     if predator_node_surveyed == prey.curr_pos:
+                #         found_prey = True
 
                 
                 # updating both belief states
@@ -218,8 +219,8 @@ class Agent_7:
                 found_prey = False
                 found_predator = False
 
-                predator_node_surveyed = None
-                prey_node_surveyed = None
+                # predator_node_surveyed = None
+                # prey_node_surveyed = None
 
                 # Checking termination states
                 if agent7.curr_pos == predator.curr_pos:
