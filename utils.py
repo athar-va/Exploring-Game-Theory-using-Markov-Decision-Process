@@ -176,6 +176,7 @@ def update_predator_belief_state(predator_belief_state, agent_curr_pos, agent_pr
 
 
         # predator has moved
+
         for i in range(50):
             temp_sum = 0.0
             for j in arena[i]:
@@ -192,7 +193,7 @@ def update_predator_belief_state(predator_belief_state, agent_curr_pos, agent_pr
                                                 value == min_length]
                 shortest_length_nodes = len(neighbours_with_min_path_length)
 
-                if j in neighbours_with_min_path_length:
+                if i in neighbours_with_min_path_length:
                     temp_sum += predator_belief_state[j] * (( 0.4 / get_degree(arena, j) ) + ( 0.6 / shortest_length_nodes))
                 else:
                     temp_sum += predator_belief_state[j] * ( 0.4/ get_degree(arena, j))
