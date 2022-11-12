@@ -133,7 +133,14 @@ def update_predator_belief_state(predator_belief_state, agent_curr_pos, agent_pr
             new_predator_belief_state[surveyed_node] = 0.0
             for i in range(50):
                 if i not in (agent_curr_pos, surveyed_node):
-                    new_predator_belief_state[i] = predator_belief_state[i] / ( sum(predator_belief_state.values()) - predator_belief_state[surveyed_node])
+                    try:
+                        new_predator_belief_state[i] = predator_belief_state[i] / ( sum(predator_belief_state.values()) - predator_belief_state[surveyed_node])
+                    except:
+                        print('after_survey')
+                        pprint(f'predator_belief_state: {predator_belief_state}')
+                        print(f'predator_belief_state[surveyed_node]: {predator_belief_state[surveyed_node]}')
+                        print(f'predator_belief_state[i]: {predator_belief_state[i]}')
+                        exit(0)
         # print('in update func')
         # pprint(new_predator_belief_state)
         # print('in update predator belief func after_survey')
@@ -159,7 +166,15 @@ def update_predator_belief_state(predator_belief_state, agent_curr_pos, agent_pr
             
             for i in range(50):
                 if i not in (agent_curr_pos, agent_prev_pos, surveyed_node):
-                    new_predator_belief_state[i] = predator_belief_state[i] / ( sum(predator_belief_state.values()) - predator_belief_state[agent_curr_pos] - predator_belief_state[surveyed_node])
+                    try:
+                        new_predator_belief_state[i] = predator_belief_state[i] / ( sum(predator_belief_state.values()) - predator_belief_state[agent_curr_pos] - predator_belief_state[surveyed_node])
+                    except:
+                        print('after_agent_moves')
+                        pprint(f'predator_belief_state: {predator_belief_state}')
+                        print(f'predator_belief_state[surveyed_node]: {predator_belief_state[surveyed_node]}')
+                        print(f'predator_belief_state[agent_curr_pos]: {predator_belief_state[agent_curr_pos]}')
+                        print(f'predator_belief_state[i]: {predator_belief_state[i]}')
+                        exit(0)
 
             # print('in update func')
             # pprint(new_predator_belief_state)
