@@ -1,6 +1,4 @@
 import random
-from pprint import pprint
-
 import config
 import utils
 from prey import Prey
@@ -112,7 +110,7 @@ class Agent_6:
 
                 believed_predator_curr_pos = utils.return_max_predator_belief(agent6.predator_belief_state, arena)
 
-                # print(f'believed_predator_curr_pos: {believed_predator_curr_pos}')
+
                 # using the max belief node for prey
                 agent6.move(arena, prey.curr_pos, believed_predator_curr_pos)
 
@@ -170,5 +168,5 @@ class Agent_6:
 
         data_row = ["Agent_6", win_count * 100 / number_of_games, loss_count * 100 / number_of_games,
                     forced_termination * 100 / number_of_games, 100.0, predator_certainty * 100 / number_of_games]
-        # data.append(data_row)
+
         return data_row

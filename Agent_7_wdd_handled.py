@@ -1,6 +1,4 @@
 import random
-from pprint import pprint
-
 import config
 import utils
 from prey import Prey
@@ -35,12 +33,12 @@ class Agent_7_wdd_handled:
         # Initialize prey belief state
         self.prey_belief_state = dict.fromkeys([i for i in range(50)], 1 / 49)
         self.prey_belief_state[self.curr_pos] = 0
-        # print(f'Initial prey belief state: {self.prey_belief_state}')
+
 
         # Initialize peadator belief state
         self.predator_belief_state = dict.fromkeys([i for i in range(50)], 0)
         self.predator_belief_state[predator_loc] = 1
-        # print(f'Initial predator belief state: {self.predator_belief_state}')
+
 
     def move(self, arena, prey_loc, predator_loc):
         """
@@ -134,25 +132,10 @@ class Agent_7_wdd_handled:
                                                                                   'after_survey')
                 if max(agent7_wdd_handled.predator_belief_state.values()) == 1:
                     predator_certainty_counter += 1
-                """
-                # print(found_prey)
-                if found_prey:
-                    # found the prey and now have to use a variable assignment tree to track the prey
-                    pass
-                else:
-                    # Choose a node at random and assume it is where the prey is
-                    agent7.prey_belief_state[node_surveyed] = 0
-                    for i in range(50):
-                        degree = utils.get_degree(arena, i)
-                        if i != node_surveyed:
-                            agent7.prey_belief_state[i] += 1/48 # Has to be phrased in the form of previous probability and next probability in terms of the degree of neighbours of this node
-                """
 
                 believed_prey_curr_pos = utils.return_max_prey_belief(agent7_wdd_handled.prey_belief_state, arena)
                 believed_predator_curr_pos = utils.return_max_predator_belief(agent7_wdd_handled.predator_belief_state, arena)
 
-                # print(f'believed_prey_curr_pos: {believed_prey_curr_pos}')
-                # print(f'believed_predator_curr_pos: {believed_predator_curr_pos}')
                 # using the max belief node for prey
                 agent7_wdd_handled.move(arena, believed_prey_curr_pos, believed_predator_curr_pos)
 
@@ -229,6 +212,6 @@ class Agent_7_wdd_handled:
 
         data_row = ["Agent_7_wdd_handled", win_count * 100 / number_of_games, loss_count * 100 / number_of_games,
                     forced_termination * 100 / number_of_games, prey_certainty * 100 / number_of_games, predator_certainty * 100 / number_of_games]
-        # data.append(data_row)
+
         return data_row
 

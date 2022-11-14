@@ -1,6 +1,4 @@
 import random
-from pprint import pprint
-
 import config
 import utils
 from prey import Prey
@@ -93,8 +91,6 @@ class Agent_5:
             predator_certainty_counter = 0
             while 1:
                 print("In game Agent_5 at game_count: ", game_count, " step_count: ", step_count)
-                # print("Agent Prey Predator")
-                # print(agent5.curr_pos, prey.curr_pos, predator.curr_pos)
 
                 # Survey a node initially without ever knowing where the prey is for a fact
                 found_predator, node_surveyed = utils.survey_predator(agent5, predator)
@@ -113,12 +109,7 @@ class Agent_5:
                     predator_certainty_counter += 1
                 believed_predator_curr_pos = utils.return_max_predator_belief(agent5.predator_belief_state, arena)
 
-                # print("after_survey Predator Belief")
-                # print("after_survey Predator Actual:", predator.curr_pos, "Predator believed :", believed_predator_curr_pos)
-                # pprint(agent5.predator_belief_state)
 
-
-                # print(f'believed_predator_curr_pos: {believed_predator_curr_pos}')
                 # using the max belief node for prey
                 agent5.move(arena, prey.curr_pos, believed_predator_curr_pos)
 
@@ -139,10 +130,6 @@ class Agent_5:
                                                                             node_surveyed, \
                                                                             'after_agent_moves')
 
-                # print("after_agent_moves Predator Belief")
-                # print("after_agent_moves Predator Actual:", predator.curr_pos, "Predator believed :",believed_predator_curr_pos)
-                # pprint(agent5.predator_belief_state)
-
 
                 prey.move(arena)
 
@@ -161,12 +148,6 @@ class Agent_5:
                                                                             found_predator, \
                                                                             node_surveyed, \
                                                                             'after_predator_moves')
-
-                # print("after_predator_moves Predator Belief")
-                # print("after_predator_moves Predator Actual:", predator.curr_pos, "Predator believed :",believed_predator_curr_pos)
-                # pprint(agent5.predator_belief_state)
-
-
 
                 # Checking termination states
                 if agent5.curr_pos == predator.curr_pos:
@@ -187,5 +168,4 @@ class Agent_5:
 
         data_row = ["Agent_5", win_count * 100 / number_of_games, loss_count * 100 / number_of_games,
                     forced_termination * 100 / number_of_games, 100.0, predator_certainty * 100 / number_of_games]
-        # data.append(data_row)
         return data_row

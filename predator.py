@@ -15,7 +15,7 @@ class Predator:
         start (int): A random integer denoting a node in the arena
         """
         self.curr_pos = start
-        #print(f'predator initialized with {self.curr_pos}')
+
     
     def move(self, agent_pos, arena):
         """
@@ -27,13 +27,6 @@ class Predator:
         agent_pos (int): Position of the agent
         """
 
-        """
-        #print('moving predator')
-        path, path_length = utils.get_shortest_path(self.curr_pos, agent_pos, arena)
-        # print(path)
-        # path.popleft()  # removes the first element of the path so that predator doesn't endup in the the same place
-        self.curr_pos = path.popleft()
-        """
         predator_neighbour_path_length = {}
 
         # Finds the length for the shortest path for each of predators neighbours
@@ -49,17 +42,6 @@ class Predator:
         # Chooses randomly between the neighbours
         self.curr_pos = random.choice(neighbours_with_min_path_length)
 
-        """ Testing this function
-        print("predator_neighbour_path_length")
-        print(predator_neighbour_path_length)
-        print("neighbours_with_min_path_length")
-        print(neighbours_with_min_path_length)
-        print("Predator curr_pos")
-        print(self.curr_pos)
-
-        exit(0)
-        """
-
     def distracted_move(self, agent_pos, arena):
         """
         Randomly chooses between the neighbours having the shortest path to the agent
@@ -70,13 +52,6 @@ class Predator:
         agent_pos (int): Position of the agent
         """
 
-        """
-        #print('moving predator')
-        path, path_length = utils.get_shortest_path(self.curr_pos, agent_pos, arena)
-        # print(path)
-        # path.popleft()  # removes the first element of the path so that predator doesn't endup in the the same place
-        self.curr_pos = path.popleft()
-        """
         if random.random() <= 0.6:
             predator_distracted = False
         else:
@@ -99,17 +74,6 @@ class Predator:
 
             # Chooses randomly between the neighbours
             self.curr_pos = random.choice(neighbours_with_min_path_length)
-
-        """ Testing this function
-        print("predator_neighbour_path_length")
-        print(predator_neighbour_path_length)
-        print("neighbours_with_min_path_length")
-        print(neighbours_with_min_path_length)
-        print("Predator curr_pos")
-        print(self.curr_pos)
-
-        exit(0)
-        """
 
     def move_with_rand_selection(self, agent_pos, arena):
         """
@@ -134,13 +98,3 @@ class Predator:
         # Chooses randomly between the neighbours
         self.curr_pos = random.choice(neighbours_with_min_path_length)
 
-        """ Testing this function
-        print("predator_neighbour_path_length")
-        print(predator_neighbour_path_length)
-        print("neighbours_with_min_path_length")
-        print(neighbours_with_min_path_length)
-        print("Predator curr_pos")
-        print(self.curr_pos)
-
-        exit(0)
-        """

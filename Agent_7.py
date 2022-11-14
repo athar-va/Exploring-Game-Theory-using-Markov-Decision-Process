@@ -1,6 +1,4 @@
 import random
-from pprint import pprint
-
 import config
 import utils
 from prey import Prey
@@ -129,8 +127,6 @@ class Agent_7:
                     if predator_node_surveyed == prey.curr_pos:
                         found_prey = True
                 zero_values = 0
-                
-                # updating both belief states
 
                 agent7.prey_belief_state = utils.update_prey_belief_state(agent7.prey_belief_state, \
                                                                             agent7.curr_pos, \
@@ -156,12 +152,6 @@ class Agent_7:
                 believed_prey_curr_pos = utils.return_max_prey_belief(agent7.prey_belief_state, arena)
                 believed_predator_curr_pos = utils.return_max_predator_belief(agent7.predator_belief_state, arena)
 
-                # print( " After survey, Predator at : ", predator.curr_pos," believed at :", believed_predator_curr_pos)
-                # pprint(agent7.predator_belief_state)
-                # print(sum(agent7.predator_belief_state.values()))
-
-                # print(f'believed_prey_curr_pos: {believed_prey_curr_pos}')
-                # print(f'believed_predator_curr_pos: {believed_predator_curr_pos}')
 
                 #using the max belief node for prey
                 agent7.move(arena, believed_prey_curr_pos, believed_predator_curr_pos)
@@ -191,10 +181,6 @@ class Agent_7:
                                                                             node_surveyed, \
                                                                             'after_agent_moves')
 
-                # print(" After survey, Predator at : ", predator.curr_pos, " believed at :", believed_predator_curr_pos)
-                # pprint(agent7.predator_belief_state)
-                # print(sum(agent7.predator_belief_state.values()))
-
                 prey.move(arena)
 
                 agent7.prey_belief_state = utils.update_prey_belief_state(agent7.prey_belief_state, \
@@ -220,9 +206,6 @@ class Agent_7:
                                                                             node_surveyed, \
                                                                             'after_predator_moves')
 
-                # print(" After survey, Predator at : ", predator.curr_pos, " believed at :", believed_predator_curr_pos)
-                # pprint(agent7.predator_belief_state)
-                # print(sum(agent7.predator_belief_state.values()))
 
                 found_prey = False
                 found_predator = False
@@ -255,5 +238,5 @@ class Agent_7:
 
         data_row = ["Agent_7", win_count * 100 / number_of_games, loss_count * 100 / number_of_games,
                     forced_termination * 100 / number_of_games, prey_certainty * 100 / number_of_games, predator_certainty * 100 / number_of_games]
-        # data.append(data_row)
+
         return data_row

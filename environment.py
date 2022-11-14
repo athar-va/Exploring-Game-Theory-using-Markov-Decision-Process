@@ -16,11 +16,7 @@ def generate_environement():
         degree[keys]=len(arena[keys])
         available_nodes.append(keys)
 
-    #print(degree)
-    #print(available_nodes)
-
     while len(available_nodes) > 0:
-        #print(available_nodes)
         node1 = random.choice(available_nodes)
 
         # Checking if random node has degree 3
@@ -47,8 +43,6 @@ def generate_environement():
                 else:
                     legal_node2_neighbours.append(node2)
 
-            #print("legal nodes for ",node1,":", legal_node2_neighbours)
-
             # legal_node2_neighbours contains all the legal neighbours of node2
             if len(legal_node2_neighbours)==0:
                 available_nodes.remove(node1)
@@ -70,27 +64,6 @@ def generate_environement():
                 degree[node1] += 1
                 degree[node2] += 1
 
-        """if len(available_nodes) == 2:
-            node1=available_nodes[0]
-            node2=available_nodes[1]
-            if degree[node2] <3 and degree[node1] < 3 :
-                # Adding edge to the dictionary
-                arena[node1].append(node2)
-                arena[node2].append(node1)
-
-                # Removing nodes from available nodes
-                print(node1, node2)
-                available_nodes.remove(node1)
-                available_nodes.remove(node2)
-                degree[node1] += 1
-                degree[node2] += 1"""
-
-        #print(available_nodes)
-        #print(sum(degree.values()))
-
-    # print(sum(degree.values()))
-    #print(degree)
-    #print(arena)
 
     # Maze visualization code
 
@@ -105,6 +78,3 @@ def generate_environement():
     plt.show()"""
 
     return arena
-
-# arena=generate_environement()
-# print(arena)

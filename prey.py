@@ -22,7 +22,7 @@ class Prey:
         arena: The arena used currently
         """
 
-        #list_to_choose_from = arena[self.curr_pos] <- this line edits the original arena variable
+
         list_to_choose_from = deepcopy(arena[self.curr_pos])
         list_to_choose_from.append(self.curr_pos)
         self.curr_pos = random.choice(list_to_choose_from)

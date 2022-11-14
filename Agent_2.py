@@ -1,17 +1,9 @@
 import random
-from pprint import pprint
-import matplotlib.pyplot as plt
 import config
 import utils
 from prey import Prey
 from predator import Predator
-import networkx as nx
-"""
-# Test Imports
-from pprint import pprint
-import environment as env
 
-"""
 
 
 class Agent_2:
@@ -131,82 +123,6 @@ class Agent_2:
 
         data_row = ["Agent_2", win_count * 100 / number_of_games, loss_count * 100 / number_of_games,
                     forced_termination * 100 / number_of_games, 100.0, 100.0]
-        # data.append(data_row)
 
-
-        # chocolate pan
-        # if loss_count * 100 / number_of_games > 30:
-        #     pprint(arena)
-        #     print("Agent:",test_agent_pos," Prey :",test_prey_pos, " Predator :",test_predator_pos)
-        #
-        #     edges = []
-        #     for key in arena:
-        #         for i in arena[key]:
-        #             edges.append([key,i])
-        #         #print(edges)
-        #     graph=nx.Graph()
-        #     graph.add_edges_from(edges)
-        #     nx.draw_networkx(graph)
-        #     plt.show()
-        #
-        #     exit(0)
         return data_row
 
-
-"""
-# Class Test code
-#arena=env.generate_environement()
-arena = {0: [1, 49, 48],
-         1: [2, 0, 46],
-         2: [3, 1, 5],
-         3: [4, 2, 7],
-         4: [5, 3, 6],
-         5: [6, 4, 2],
-         6: [7, 5, 4],
-         7: [8, 6, 3],
-         8: [9, 7, 10],
-         9: [10, 8, 11],
-         10: [11, 9, 8],
-         11: [12, 10, 9],
-         12: [13, 11, 14],
-         13: [14, 12, 15],
-         14: [15, 13, 12],
-         15: [16, 14, 13],
-         16: [17, 15, 19],
-         17: [18, 16, 20],
-         18: [19, 17, 21],
-         19: [20, 18, 16],
-         20: [21, 19, 17],
-         21: [22, 20, 18],
-         22: [23, 21, 26],
-         23: [24, 22, 25],
-         24: [25, 23, 28],
-         25: [26, 24, 23],
-         26: [27, 25, 22],
-         27: [28, 26, 30],
-         28: [29, 27, 24],
-         29: [30, 28, 31],
-         30: [31, 29, 27],
-         31: [32, 30, 29],
-         32: [33, 31, 35],
-         33: [34, 32],
-         34: [35, 33, 39],
-         35: [36, 34, 32],
-         36: [37, 35, 38],
-         37: [38, 36, 41],
-         38: [39, 37, 36],
-         39: [40, 38, 34],
-         40: [41, 39, 44],
-         41: [42, 40, 37],
-         42: [43, 41],
-         43: [44, 42, 47],
-         44: [45, 43, 40],
-         45: [46, 44, 49],
-         46: [47, 45, 1],
-         47: [48, 46, 43],
-         48: [49, 47, 0],
-         49: [0, 48, 45]}
-# print(a1.curr_pos)
-a1.move(arena, 5, 6)
-# pprint(arena)
-"""

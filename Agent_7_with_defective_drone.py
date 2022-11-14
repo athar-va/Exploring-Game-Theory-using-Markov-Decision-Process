@@ -1,6 +1,4 @@
 import random
-from pprint import pprint
-
 import config
 import utils
 from prey import Prey
@@ -128,25 +126,10 @@ class Agent_7_wdd:
                                                                                   node_surveyed, \
                                                                                   'after_survey')
 
-                """
-                # print(found_prey)
-                if found_prey:
-                    # found the prey and now have to use a variable assignment tree to track the prey
-                    pass
-                else:
-                    # Choose a node at random and assume it is where the prey is
-                    agent7.prey_belief_state[node_surveyed] = 0
-                    for i in range(50):
-                        degree = utils.get_degree(arena, i)
-                        if i != node_surveyed:
-                            agent7.prey_belief_state[i] += 1/48 # Has to be phrased in the form of previous probability and next probability in terms of the degree of neighbours of this node
-                """
 
                 believed_prey_curr_pos = utils.return_max_prey_belief(agent7_wdd.prey_belief_state, arena)
                 believed_predator_curr_pos = utils.return_max_predator_belief(agent7_wdd.predator_belief_state, arena)
 
-                # print(f'believed_prey_curr_pos: {believed_prey_curr_pos}')
-                # print(f'believed_predator_curr_pos: {believed_predator_curr_pos}')
                 # using the max belief node for prey
                 agent7_wdd.move(arena, believed_prey_curr_pos, believed_predator_curr_pos)
 
@@ -215,6 +198,5 @@ class Agent_7_wdd:
 
         data_row = ["Agent_7_wdd", win_count * 100 / number_of_games, loss_count * 100 / number_of_games,
                     forced_termination * 100 / number_of_games]
-        # data.append(data_row)
         return data_row
 
