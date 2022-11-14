@@ -13,6 +13,9 @@ from Agent_7 import Agent_7
 from Agent_8 import Agent_8
 from Agent_7_with_defective_drone import Agent_7_wdd
 from Agent_7_wdd_handled import Agent_7_wdd_handled
+from Agent_8_with_defective_drone import Agent_8_wdd
+from Agent_8_wdd_handled import Agent_8_wdd_handled
+
 # from Agent_9 import Agent_9
 import utils
 import config
@@ -38,9 +41,11 @@ def run():
         results.append(Agent_5.begin(arena))
         results.append(Agent_6.begin(arena))
         results.append(Agent_7.begin(arena))
-        results.append(Agent_8.begin(arena))
         results.append(Agent_7_wdd.begin(arena))
         results.append(Agent_7_wdd_handled.begin(arena))
+        results.append(Agent_8.begin(arena))
+        results.append(Agent_8_wdd.begin(arena))
+        results.append(Agent_8_wdd_handled.begin(arena))
         # results.append(Agent_9.begin(arena))
 
 
