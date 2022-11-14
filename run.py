@@ -32,13 +32,13 @@ def run():
 
     while no_of_arenas < config.NUMBER_OF_ARENAS:
         arena = env.generate_environement()
-        # results.append(Agent_1.begin(arena))
+        results.append(Agent_1.begin(arena))
         # results.append(Agent_2.begin(arena))
         # results.append(Agent_3.begin(arena))
         # results.append(Agent_4.begin(arena))
         # results.append(Agent_5.begin(arena))
         # results.append(Agent_6.begin(arena))
-        results.append(Agent_7.begin(arena))
+        # results.append(Agent_7.begin(arena))
         # results.append(Agent_8.begin(arena))
         # results.append(Agent_7_wdd.begin(arena))
         # results.append(Agent_7_wdd_handled.begin(arena))

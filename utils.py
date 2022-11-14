@@ -522,7 +522,7 @@ def best_node(arena, curr_pos, prey_loc, predator_loc):
 
     for k in predator_dist.keys():
         if predator_dist[k] == curr_pos_predator_dist:
-            farther_from_predator[k] = predator_dist[k]
+            not_closer_to_predator[k] = predator_dist[k]
 
     # Flag helps to avoid going through multiple ifs if one if condition is satisfied
     flag = 0
