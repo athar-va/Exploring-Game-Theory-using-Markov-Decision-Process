@@ -206,7 +206,7 @@ class Agent_8_wdd_handled:
             if step_count != 0:
                 predator_certainty += predator_certainty_counter / step_count
             else:
-                predator_certainty = 1.0
+                predator_certainty = 0.0
             game_count += 1
 
         data_row = ["Agent_8_wdd_handled", win_count * 100 / number_of_games, loss_count * 100 / number_of_games,

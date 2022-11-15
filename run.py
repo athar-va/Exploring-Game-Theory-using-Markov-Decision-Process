@@ -15,6 +15,8 @@ from Agent_7_with_defective_drone import Agent_7_wdd
 from Agent_7_wdd_handled import Agent_7_wdd_handled
 from Agent_8_with_defective_drone import Agent_8_wdd
 from Agent_8_wdd_handled import Agent_8_wdd_handled
+from Agent_7_survey_or_move import Agent_7_survey_or_move
+from Agent_8_survey_or_move import Agent_8_survey_or_move
 
 # from Agent_9 import Agent_9
 import utils
@@ -47,6 +49,9 @@ def run():
         results.append(Agent_8_wdd.begin(arena))
         results.append(Agent_8_wdd_handled.begin(arena))
         # results.append(Agent_9.begin(arena))
+        results.append(Agent_7_survey_or_move.begin(arena))
+        results.append(Agent_8_survey_or_move.begin(arena))
+        
 
 
         print('-'*100)

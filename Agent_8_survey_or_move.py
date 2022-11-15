@@ -5,7 +5,7 @@ from prey import Prey
 from predator import Predator
 
 
-class Agent_8_wdd:
+class Agent_8_survey_or_move:
 
     def __init__(self, prey_loc, predator_loc):
         """
@@ -90,75 +90,74 @@ class Agent_8_wdd:
             # Creating objects
             prey = Prey()
             predator = Predator()
-            agent8_wdd = Agent_8_wdd(prey.curr_pos, predator.curr_pos)
+            agent8 = Agent_8_survey_or_move(prey.curr_pos, predator.curr_pos)
 
             step_count = 0
             found_prey = False
             found_predator = True
             prey_certainty_counter = 0
             predator_certainty_counter = 0
+            survey = False
+            node_surveyed = 0
             while 1:
-                print("In game Agent_8_wdd at game_count: ", game_count, " step_count: ", step_count)
-                print(agent8_wdd.curr_pos, prey.curr_pos, predator.curr_pos)
+                print("In game Agent_8 at game_count: ", game_count, " step_count: ", step_count)
+                print(agent8.curr_pos, prey.curr_pos, predator.curr_pos)
 
-                # Check if it knows where the predator is
-                if found_predator:
-                    found_prey, node_surveyed = utils.survey_prey(agent8_wdd, prey)
-                    if found_prey:
-                        if random.random() <= 0.1:
-                            found_prey = False
-                else:
-                    found_predator, node_surveyed = utils.survey_predator(agent8_wdd, predator)
-                    if found_predator:
-                        if random.random() <= 0.1:
-                            found_predator = False
+                if survey:
+                    # Check if it knows where the predator is
+                    if max(agent8.predator_belief_state.values()) == 1.0:
+                        found_prey, node_surveyed = utils.survey_prey(agent8, prey)
+                    else:
+                        found_predator, node_surveyed = utils.survey_predator(agent8, predator)
 
-                # updating both belief states
-                agent8_wdd.prey_belief_state = utils.update_prey_belief_state(agent8_wdd.prey_belief_state, \
-                                                                          agent8_wdd.curr_pos, \
-                                                                          agent8_wdd.prev_pos, \
-                                                                          arena, \
-                                                                          found_prey, \
-                                                                          node_surveyed, \
-                                                                          'after_survey')
-                if max(agent8_wdd.prey_belief_state.values()) == 1:
-                    prey_certainty_counter += 1
-                agent8_wdd.predator_belief_state = utils.update_predator_belief_state(agent8_wdd.predator_belief_state, \
-                                                                                  agent8_wdd.curr_pos, \
-                                                                                  agent8_wdd.prev_pos, \
-                                                                                  arena, \
-                                                                                  found_predator, \
-                                                                                  node_surveyed, \
-                                                                                  'after_survey')
+                    # updating both belief states
+                    agent8.prey_belief_state = utils.update_prey_belief_state(agent8.prey_belief_state, \
+                                                                            agent8.curr_pos, \
+                                                                            agent8.prev_pos, \
+                                                                            arena, \
+                                                                            found_prey, \
+                                                                            node_surveyed, \
+                                                                            'after_survey')
+                    
+                    agent8.predator_belief_state = utils.update_predator_belief_state(agent8.predator_belief_state, \
+                                                                                    agent8.curr_pos, \
+                                                                                    agent8.prev_pos, \
+                                                                                    arena, \
+                                                                                    found_predator, \
+                                                                                    node_surveyed, \
+                                                                                    'after_survey')
+                
+                if max(agent8.prey_belief_state.values()) == 1:
+                        prey_certainty_counter += 1
+                
+                if max(agent8.predator_belief_state.values()) == 1:
+                        predator_certainty_counter += 1
 
-                if max(agent8_wdd.predator_belief_state.values()) == 1:
-                    predator_certainty_counter += 1
+                believed_prey_curr_pos = utils.return_max_prey_belief(agent8.prey_belief_state, arena)
+                believed_predator_curr_pos = utils.return_max_predator_belief(agent8.predator_belief_state, arena)
 
-                believed_prey_curr_pos = utils.return_max_prey_belief(agent8_wdd.prey_belief_state, arena)
-                believed_predator_curr_pos = utils.return_max_predator_belief(agent8_wdd.predator_belief_state, arena)
-
-                agent8_wdd.move(arena, believed_prey_curr_pos, believed_predator_curr_pos)
+                agent8.move(arena, believed_prey_curr_pos, believed_predator_curr_pos)
 
                 # Checking termination states
-                if agent8_wdd.curr_pos == prey.curr_pos:
+                if agent8.curr_pos == prey.curr_pos:
                     win_count += 1
                     break
-                elif agent8_wdd.curr_pos == predator.curr_pos:
+                elif agent8.curr_pos == predator.curr_pos:
                     loss_count += 1
                     break
 
                 # update belief state
-                agent8_wdd.prey_belief_state = utils.update_prey_belief_state(agent8_wdd.prey_belief_state, \
-                                                                          agent8_wdd.curr_pos, \
-                                                                          agent8_wdd.prev_pos, \
+                agent8.prey_belief_state = utils.update_prey_belief_state(agent8.prey_belief_state, \
+                                                                          agent8.curr_pos, \
+                                                                          agent8.prev_pos, \
                                                                           arena, \
                                                                           found_prey, \
                                                                           node_surveyed, \
                                                                           'after_agent_moves')
 
-                agent8_wdd.predator_belief_state = utils.update_predator_belief_state(agent8_wdd.predator_belief_state, \
-                                                                                  agent8_wdd.curr_pos, \
-                                                                                  agent8_wdd.prev_pos, \
+                agent8.predator_belief_state = utils.update_predator_belief_state(agent8.predator_belief_state, \
+                                                                                  agent8.curr_pos, \
+                                                                                  agent8.prev_pos, \
                                                                                   arena, \
                                                                                   found_predator, \
                                                                                   node_surveyed, \
@@ -166,30 +165,30 @@ class Agent_8_wdd:
 
                 prey.move(arena)
 
-                agent8_wdd.prey_belief_state = utils.update_prey_belief_state(agent8_wdd.prey_belief_state, \
-                                                                          agent8_wdd.curr_pos, \
-                                                                          agent8_wdd.prev_pos, \
+                agent8.prey_belief_state = utils.update_prey_belief_state(agent8.prey_belief_state, \
+                                                                          agent8.curr_pos, \
+                                                                          agent8.prev_pos, \
                                                                           arena, \
                                                                           found_prey, \
                                                                           node_surveyed, \
                                                                           'after_prey_moves')
 
                 # Checking termination states
-                if agent8_wdd.curr_pos == prey.curr_pos:
+                if agent8.curr_pos == prey.curr_pos:
                     win_count += 1
                     break
 
-                predator.distracted_move(agent8_wdd.curr_pos, arena)
+                predator.distracted_move(agent8.curr_pos, arena)
 
-                agent8_wdd.predator_belief_state = utils.update_predator_belief_state(agent8_wdd.predator_belief_state, \
-                                                                                  agent8_wdd.curr_pos, \
-                                                                                  agent8_wdd.prev_pos, \
+                agent8.predator_belief_state = utils.update_predator_belief_state(agent8.predator_belief_state, \
+                                                                                  agent8.curr_pos, \
+                                                                                  agent8.prev_pos, \
                                                                                   arena, \
                                                                                   found_predator, \
                                                                                   node_surveyed, \
                                                                                   'after_predator_moves')
                 # Checking termination states
-                if agent8_wdd.curr_pos == predator.curr_pos:
+                if agent8.curr_pos == predator.curr_pos:
                     loss_count += 1
                     break
 
@@ -201,15 +200,13 @@ class Agent_8_wdd:
                     break
             if step_count != 0:
                 prey_certainty += prey_certainty_counter / step_count
-            else:
-                prey_certainty = 0.0
-            
-            if step_count != 0:
                 predator_certainty += predator_certainty_counter / step_count
             else:
+                prey_certainty = 0.0
                 predator_certainty = 0.0
+
             game_count += 1
 
-        data_row = ["Agent_8_wdd", win_count * 100 / number_of_games, loss_count * 100 / number_of_games,
+        data_row = ["Agent_8_survey_or_move", win_count * 100 / number_of_games, loss_count * 100 / number_of_games,
                     forced_termination * 100 / number_of_games, prey_certainty * 100 / number_of_games, predator_certainty * 100 / number_of_games]
         return data_row

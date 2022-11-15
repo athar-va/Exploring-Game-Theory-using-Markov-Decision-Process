@@ -4,7 +4,7 @@ import utils
 from prey import Prey
 from predator import Predator
 
-class Agent_7:
+class Agent_7_survey_or_move:
 
     def __init__(self, prey_loc, predator_loc):
         """
@@ -90,7 +90,7 @@ class Agent_7:
             # Creating objects
             prey = Prey()
             predator = Predator()
-            agent7 = Agent_7(prey.curr_pos, predator.curr_pos)
+            agent7 = Agent_7_survey_or_move(prey.curr_pos, predator.curr_pos)
             zero_values=0
             step_count = 0
             found_prey = False
@@ -98,54 +98,59 @@ class Agent_7:
             prey_certainty_counter = 0
             predator_certainty_counter = 0
             believed_predator_curr_pos = predator.curr_pos
+            survey = False
+            node_surveyed = 0
             while 1:
                 print("In game Agent_7 at game_count: ", game_count, " step_count: ", step_count)
                 print(agent7.curr_pos, prey.curr_pos, predator.curr_pos)
-
-
-                # Check if it knows where the predator is
-                for i in agent7.predator_belief_state.keys():
-                    if agent7.predator_belief_state[i] == 0 or agent7.predator_belief_state[i] == 0.0:
-                        zero_values+=1
-                        
                 
-                print(zero_values)
+                if survey:
+                    # Check if it knows where the predator is
+                    for i in agent7.predator_belief_state.keys():
+                        if agent7.predator_belief_state[i] == 0 or agent7.predator_belief_state[i] == 0.0:
+                            zero_values+=1
+                            
+                    
+                    print(zero_values)
 
 
-                if zero_values == 49 :
-                    found_prey, prey_node_surveyed = utils.survey_prey(agent7, prey)
-                else:
-                    found_predator, predator_node_surveyed = utils.survey_predator(agent7, predator)
+                    if zero_values == 49 :
+                        found_prey, prey_node_surveyed = utils.survey_prey(agent7, prey)
+                    else:
+                        found_predator, predator_node_surveyed = utils.survey_predator(agent7, predator)
 
-                if prey_node_surveyed != None:
-                    node_surveyed = prey_node_surveyed
-                    if prey_node_surveyed == predator.curr_pos:
-                        found_predator = True
+                    if prey_node_surveyed != None:
+                        node_surveyed = prey_node_surveyed
+                        if prey_node_surveyed == predator.curr_pos:
+                            found_predator = True
 
-                else:
-                    node_surveyed = predator_node_surveyed
-                    if predator_node_surveyed == prey.curr_pos:
-                        found_prey = True
-                zero_values = 0
+                    else:
+                        node_surveyed = predator_node_surveyed
+                        if predator_node_surveyed == prey.curr_pos:
+                            found_prey = True
+                    zero_values = 0
 
-                agent7.prey_belief_state = utils.update_prey_belief_state(agent7.prey_belief_state, \
-                                                                            agent7.curr_pos, \
-                                                                            agent7.prev_pos, \
-                                                                            arena, \
-                                                                            found_prey, \
-                                                                            node_surveyed, \
-                                                                            'after_survey')
+                    agent7.prey_belief_state = utils.update_prey_belief_state(agent7.prey_belief_state, \
+                                                                                agent7.curr_pos, \
+                                                                                agent7.prev_pos, \
+                                                                                arena, \
+                                                                                found_prey, \
+                                                                                node_surveyed, \
+                                                                                'after_survey')
+                    
+
+
+                    agent7.predator_belief_state = utils.update_predator_belief_state(agent7.predator_belief_state, \
+                                                                                agent7.curr_pos, \
+                                                                                agent7.prev_pos, \
+                                                                                arena, \
+                                                                                found_predator, \
+                                                                                node_surveyed, \
+                                                                                'after_survey')
+                
                 if max(agent7.prey_belief_state.values()) == 1:
-                    prey_certainty_counter += 1
+                        prey_certainty_counter += 1
 
-
-                agent7.predator_belief_state = utils.update_predator_belief_state(agent7.predator_belief_state, \
-                                                                            agent7.curr_pos, \
-                                                                            agent7.prev_pos, \
-                                                                            arena, \
-                                                                            found_predator, \
-                                                                            node_surveyed, \
-                                                                            'after_survey')
                 if max(agent7.predator_belief_state.values()) == 1:
                     predator_certainty_counter += 1
 
@@ -236,7 +241,7 @@ class Agent_7:
 
             game_count += 1
 
-        data_row = ["Agent_7", win_count * 100 / number_of_games, loss_count * 100 / number_of_games,
+        data_row = ["Agent_7_survey_or_move", win_count * 100 / number_of_games, loss_count * 100 / number_of_games,
                     forced_termination * 100 / number_of_games, prey_certainty * 100 / number_of_games, predator_certainty * 100 / number_of_games]
 
         return data_row

@@ -193,8 +193,12 @@ class Agent_8:
                     forced_termination += 1
                     break
 
-            prey_certainty += prey_certainty_counter / step_count
-            predator_certainty += predator_certainty_counter / step_count
+            if step_count != 0:
+                prey_certainty += prey_certainty_counter / step_count
+                predator_certainty += predator_certainty_counter / step_count
+            else:
+                prey_certainty = 0.0
+                predator_certainty = 0.0
 
             game_count += 1
 
